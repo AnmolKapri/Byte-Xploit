@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Dashboard</title>
+    <link rel="shortcut icon" href="images/logo-circular.png" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .navbar img {
+            height: 45px;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(255, 255, 255, 0.677);
+            z-index: 10;
+        }
+        .navbar a {
+            text-decoration: none;
+            color:black;
+            font-weight: bold;
+            padding: 10px 22px;
+            border-radius: 6px;
+            transition: 0.3s;
+            display: flex;
+            justify-content: center;
+        }
+        .navbar ul {
+            width: auto;
+           list-style: none;
+           display: flex;
+         gap: 25px;
+         position: relative;
+         left: 800px;
+         top: 5px;
+        }
+        .navbar li a:hover {
+            content: "";
+            background-color: #94cc4a;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-left: 10px;
+            display: inline-block;
+        }
+
+        .main {
+            background: url(images/background.jpg) no-repeat center center/cover;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+        <nav class="navbar">
+            <img src="images/logo-rec.png" alt="AgriCare Logo">
+            <ul>
+              <li><a href="#">HOME</a></li>
+              <li><a href="experts.html">EXPERTS</a></li>
+              <li><a href="crops.html">CROPS</a></li>
+              <li><a href="contact-form.html">CONTACT US</a></li>
+            </ul>
+        </nav>
+    <div class="main">
+    </div>
+</body>
+</html>
