@@ -1,4 +1,4 @@
-# Byte-Xploit
+# ByteXploit
 Member:
 
 1. Binamra Sapkota
