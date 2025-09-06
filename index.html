@@ -4,9 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AgriCare</title>
-    <link rel="stylesheet" href="css/index.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(255, 255, 255, 0.677);
+            z-index: 10;
+        }
+        .navbar img {
+            height: 45px;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            background: #2e7d32;
+            padding: 10px 22px;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+        .navbar a:hover {
+            background: #1b5e20;
+        }
+        .main {
+            background: url(images/background.jpg) no-repeat center center/cover;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+        }
+        .main-content {
+            position: relative;
+            text-align: center;
+            z-index: 2;
+            max-width: 800px;
+            padding: 20px;
+        }
+        .main-content h1 {
+            font-size: 50px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .main-content p {
+            font-size: 22px;
+            margin-bottom: 35px;
+        }
+        .main-content a {
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background: #2e7d32;
+            padding: 14px 30px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .main-content a:hover {
+            background: #1b5e20;
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="navbar">
+        <img src="images/logo-rec.png" alt="AgriCare Logo">
+        <a href="login-signup.html">Login / Signup</a>
+    </div>
+    <div class="main">
+        <div class="overlay"></div>
+        <div class="main-content">
+            <h1>Welcome To AgriCare</h1>
+            <p>Connecting Farmers with Experts for a Greener Tomorrow</p>
+            <a href="login-signup.html">Get Started</a>
+        </div>
+    </div>
 </body>
 </html>
