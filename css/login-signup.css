@@ -110,7 +110,7 @@ input[type="radio"]{
     cursor: default;
     user-select: none;
 }
-.formInside{
+.formInside{ 
     display: flex;
     width: 200%;
 }
