@@ -22,7 +22,7 @@
             align-items: center;
             padding: 20px;
         }
-        .bigBox {
+        .container {
             max-width: 1100px;
             width: 100%;
             background: rgba(255, 255, 255, 0.85);
@@ -34,7 +34,7 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.5);
         }
-        .infoSide {
+        .sidebar {
             width: 40%;
             background: linear-gradient(135deg, #145a32 0%, #28a745 100%);
             color: white;
@@ -45,7 +45,7 @@
             position: relative;
             overflow: hidden;
         }
-        .infoSide::before {
+        .sidebar::before {
             content: '';
             position: absolute;
             top: -50px;
@@ -55,7 +55,7 @@
             background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
         }
-        .infoSide::after {
+        .sidebar::after {
             content: '';
             position: absolute;
             bottom: -80px;
@@ -65,25 +65,28 @@
             background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
         }
-        .formSide {
+        .main-form {
             width: 60%;
             padding: 50px 40px;
             background: white;
         }
-        .logo {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 30px;
+        .brand {
             display: flex;
             align-items: center;
+            margin-bottom: 50px;
             position: relative;
             z-index: 2;
         }
-        .logo i {
+        .brand-logo {
+            width: 100px;
+            height: 100px;
+            margin-left: 100px;
+            border-radius: 50%;
             margin-right: 12px;
-            font-size: 36px;
+            object-fit: cover;
+            border: 2px solid white;
         }
-        .infoBit {
+        .contact-info {
             display: flex;
             align-items: flex-start;
             margin-bottom: 30px;
@@ -91,57 +94,34 @@
             z-index: 2;
             transition: transform 0.3s ease;
         }
-        .infoBit:hover {
+        .contact-info:hover {
             transform: translateX(5px);
         }
-        .infoBit i {
+        .contact-info i {
             font-size: 24px;
             margin-right: 15px;
             margin-top: 5px;
             color: #aaf0d1;
             flex-shrink: 0;
         }
-        .infoWords h3 {
+        .info-text h3 {
             font-size: 18px;
             margin-bottom: 8px;
             font-weight: 600;
         }
-        .infoWords p {
+        .info-text p {
             font-size: 15px;
             opacity: 0.9;
             line-height: 1.6;
         }
-        .socialIcons {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-            position: relative;
-            z-index: 2;
-        }
-        .socialIcons a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            transition: all 0.3s ease;
-        }
-        .socialIcons a:hover {
-            background: white;
-            color: #28a745;
-            transform: translateY(-3px);
-        }
-        .formTitle {
+        .heading {
             font-size: 32px;
             color: #145a32;
             margin-bottom: 35px;
             font-weight: 700;
             position: relative;
         }
-        .formTitle:after {
+        .heading:after {
             content: '';
             position: absolute;
             left: 0;
@@ -151,26 +131,26 @@
             background: #28a745;
             border-radius: 3px;
         }
-        .formGrid {
+        .form-fields {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
-        .group {
+        .input-wrap {
             margin-bottom: 25px;
             position: relative;
             opacity: 0;
             transform: translateY(20px);
             animation: slideUp 0.6s ease forwards;
         }
-        .fullWidth {
+        .full {
             grid-column: 1 / span 2;
         }
-        .group:nth-child(1) { animation-delay: 0.1s; }
-        .group:nth-child(2) { animation-delay: 0.2s; }
-        .group:nth-child(3) { animation-delay: 0.3s; }
-        .group:nth-child(4) { animation-delay: 0.4s; }
-        .group:nth-child(5) { animation-delay: 0.5s; }
+        .input-wrap:nth-child(1) { animation-delay: 0.1s; }
+        .input-wrap:nth-child(2) { animation-delay: 0.2s; }
+        .input-wrap:nth-child(3) { animation-delay: 0.3s; }
+        .input-wrap:nth-child(4) { animation-delay: 0.4s; }
+        .input-wrap:nth-child(5) { animation-delay: 0.5s; }
         label {
             display: block;
             margin-bottom: 10px;
@@ -204,7 +184,7 @@
             background-position: right 18px center;
             background-size: 18px;
         }
-        .sendBtn {
+        .submit-btn {
             background: linear-gradient(135deg, #145a32 0%, #28a745 100%);
             color: white;
             border: none;
@@ -220,57 +200,56 @@
             box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
             margin-top: 10px;
         }
-        .sendBtn:hover {
+        .submit-btn:hover {
             transform: translateY(-3px) scale(1.02);
             box-shadow: 0 10px 25px rgba(40, 167, 69, 0.5);
         }
-        .sendBtn:active {
+        .submit-btn:active {
             transform: translateY(1px);
             box-shadow: 0 3px 10px rgba(40, 167, 69, 0.4);
         }
-        .sendBtn i {
+        .submit-btn i {
             margin-left: 10px;
             transition: transform 0.3s ease;
         }
-        .sendBtn:hover i {
+        .submit-btn:hover i {
             transform: translateX(4px);
         }
-        .footer {
+        .note {
             margin-top: 25px;
             font-size: 14px;
             color: #666;
             text-align: center;
         }
-        .msgGood {
+        .alert {
+            padding: 16px 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+            border-left: 5px solid;
+        }
+        .alert.success {
             background: #d4edda;
             color: #155724;
-            padding: 16px 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-            display: none;
+            border-left-color: #28a745;
             animation: fadeIn 0.5s ease;
-            border-left: 5px solid #28a745;
         }
-        .msgBad {
+        .alert.error {
             background: #f8d7da;
             color: #721c24;
-            padding: 16px 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-            display: none;
+            border-left-color: #dc3545;
             animation: shake 0.5s ease;
-            border-left: 5px solid #dc3545;
         }
-        .msgGood i, .msgBad i {
+        .alert i {
             margin-right: 10px;
         }
-        .character-count {
+        .text-counter {
             text-align: right;
             font-size: 14px;
             color: #666;
             margin-top: 5px;
         }
-        .character-count.low {
+        .text-counter.limit {
             color: #dc3545;
         }
         @keyframes fadeIn {
@@ -304,63 +283,57 @@
     </style>
 </head>
 <body>
-    <div class="bigBox">
-        <div class="infoSide">
-            <div class="logo">
-                <i class="fas fa-leaf"></i> AgriCare
+    <div class="container">
+        <div class="sidebar">
+            <div class="brand">
+                <img src="images/logo-circular.png" alt="AgriCare Logo" class="brand-logo">
             </div>
-            <div class="infoBit">
+            <div class="contact-info">
                 <i class="fas fa-map-marker-alt"></i>
-                <div class="infoWords">
+                <div class="info-text">
                     <h3>Our Location</h3>
                     <p>Narayani Model Secondary School, Bharatpur-10, Chitwan</p>
                 </div>
             </div>
-            <div class="infoBit">
+            <div class="contact-info">
                 <i class="fas fa-envelope"></i>
-                <div class="infoWords">
+                <div class="info-text">
                     <h3>Email Us</h3>
                     <p>siddharthasapkota0621@gmail.com<br>kaprianmol0@gmail.com</p>
                 </div>
             </div>
-            <div class="infoBit">
+            <div class="contact-info">
                 <i class="fas fa-phone-alt"></i>
-                <div class="infoWords">
+                <div class="info-text">
                     <h3>Call Us</h3>
                     <p>+977 9767467837<br>+977 9745359507</p>
                 </div>
             </div>
-            <div class="socialIcons">
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            </div>
         </div>
-        <div class="formSide">
-            <h2 class="formTitle">Get in Touch</h2>
-            <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
-                <input type="hidden" name="access_key" value="5750217e-dcab-42bf-acf7-e26e578cf914">
+        <div class="main-form">
+            <h2 class="heading">Get in Touch</h2>
+            <form id="contact" action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="4ffc7ed2-15ac-4b0e-ab88-938422f660fb">
                 <input type="hidden" name="subject" value="New Contact Form Submission from AgriCare">
                 <input type="hidden" name="from_name" value="AgriCare Contact Form">
                 <input type="checkbox" name="botcheck" style="display: none;">
                 
-                <div class="formGrid">
-                    <div class="group">
-                        <label for="name">Full Name *</label>
-                        <input type="text" id="name" name="name" placeholder="Your full name" required>
+                <div class="form-fields">
+                    <div class="input-wrap">
+                        <label for="user-name">Full Name *</label>
+                        <input type="text" id="user-name" name="name" placeholder="Your full name" required>
                     </div>
-                    <div class="group">
-                        <label for="email">Email Address *</label>
-                        <input type="email" id="email" name="email" placeholder="Your email address" required>
+                    <div class="input-wrap">
+                        <label for="user-email">Email Address *</label>
+                        <input type="email" id="user-email" name="email" placeholder="Your email address" required>
                     </div>
-                    <div class="group">
-                        <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" placeholder="Your phone number">
+                    <div class="input-wrap">
+                        <label for="user-phone">Phone Number</label>
+                        <input type="tel" id="user-phone" name="phone" placeholder="Your phone number">
                     </div>
-                    <div class="group">
-                        <label for="inquiryType">Inquiry Type</label>
-                        <select id="inquiryType" name="inquiry_type">
+                    <div class="input-wrap">
+                        <label for="topic">Inquiry Type</label>
+                        <select id="topic" name="inquiry_type">
                             <option value="">Select an option</option>
                             <option value="general">General Information</option>
                             <option value="support">Technical Support</option>
@@ -369,59 +342,63 @@
                             <option value="other">Other</option>
                         </select>
                     </div>
-                    <div class="group fullWidth">
-                        <label for="message">Your Message *</label>
-                        <textarea id="message" name="message" placeholder="How can we help you?" required maxlength="1000"></textarea>
-                        <div class="character-count" id="charCount">0/1000 characters</div>
+                    <div class="input-wrap full">
+                        <label for="user-message">Your Message *</label>
+                        <textarea id="user-message" name="message" placeholder="How can we help you?" required maxlength="1000"></textarea>
+                        <div class="text-counter" id="counter">0/1000 characters</div>
                     </div>
                 </div>
                 
-                <button type="submit" class="sendBtn">
+                <button type="submit" class="submit-btn">
                     Send Message <i class="fas fa-paper-plane"></i>
                 </button>
                 
-                <div class="msgGood" id="successMessage">
+                <div class="alert success" id="success">
                     <i class="fas fa-check-circle"></i> Thank you for your message! We'll get back to you soon.
                 </div>
-                <div class="msgBad" id="errorMessage">
+                <div class="alert error" id="error">
                     <i class="fas fa-exclamation-circle"></i> There was an error sending your message. Please try again.
                 </div>
             </form>
-            <div class="footer">
+            <div class="note">
                 <p>We typically respond within 24 hours during business days.</p>
             </div>
         </div>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('contactForm');
-            const successMessage = document.getElementById('successMessage');
-            const errorMessage = document.getElementById('errorMessage');
-            const charCount = document.getElementById('charCount');
-            const messageTextarea = document.getElementById('message');
-            const inputs = form.querySelectorAll('input, textarea, select');
+            // Get all form elements
+            const elements = {
+                form: document.getElementById('contact'),
+                success: document.getElementById('success'),
+                error: document.getElementById('error'),
+                counter: document.getElementById('counter'),
+                message: document.getElementById('user-message'),
+                inputs: document.querySelectorAll('input, textarea, select')
+            };
             
-            // Character count for message textarea
-            messageTextarea.addEventListener('input', function() {
+            // Track message length
+            elements.message.addEventListener('input', function() {
                 const length = this.value.length;
-                charCount.textContent = `${length}/1000 characters`;
+                elements.counter.textContent = `${length}/1000 characters`;
                 
+                // Warn user when approaching limit
                 if (length > 900) {
-                    charCount.classList.add('low');
+                    elements.counter.classList.add('limit');
                 } else {
-                    charCount.classList.remove('low');
+                    elements.counter.classList.remove('limit');
                 }
                 
-                // Hide messages when user types
-                successMessage.style.display = 'none';
-                errorMessage.style.display = 'none';
+                // Clear any existing messages
+                elements.success.style.display = 'none';
+                elements.error.style.display = 'none';
             });
             
-            // Input event listeners to clear error styles
-            inputs.forEach(input => {
+            // Reset field styles on input
+            elements.inputs.forEach(input => {
                 input.addEventListener('input', () => {
-                    successMessage.style.display = 'none';
-                    errorMessage.style.display = 'none';
+                    elements.success.style.display = 'none';
+                    elements.error.style.display = 'none';
                     input.style.borderColor = '#e0e0e0';
                 });
             });
@@ -452,7 +429,7 @@
                     return;
                 }
                 
-                // Phone validation (basic)
+                // Phone validation
                 const phoneInput = document.getElementById('phone');
                 if (phoneInput.value) {
                     const phoneRegex = /^[+]?[\d\s\-()]{10,}$/;
