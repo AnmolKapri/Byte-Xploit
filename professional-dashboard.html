@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriCare - Farmer Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/farmer-dash.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="images/logo-rec.png" alt="AgriCare Logo" style="height:40px; margin-right:10px;">
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="professional-dashboard.html" class="active">HOME</a></li>
+                        <li><a href="experts.html">EXPERTS</a></li>
+                        <li><a href="crops.html">CROPS</a></li>
+                        <li><a href="chat.html">CHAT</a></li>
+                        <li><a href="contact-form.html">CONTACT US</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Welcome To AgriCare.</h1>
+                <p>Connecting Farmers with Experts for a Greener Tomorrow</p>
+                <a href="experts.html" class="btn">View Experts</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-seedling"></i>
+                    <h3>6</h3>
+                    <p>Crops Managed</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-user-tie"></i>
+                    <h3>1</h3>
+                    <p>Active Experts</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <h3>3</h3>
+                    <p>Farmers Connected</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">How AgriCare Helps Farmers</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-img">
+                        <img src="https://api.ecrop.co/assets/precisiongrow/Crop%20Advisory2.webp" alt="Crop Experts">
+                    </div>
+                    <div class="feature-content">
+                        <h3>Connect with Crop Experts</h3>
+                        <p>Get expert advice on crop management, disease prevention, and yield optimization from agricultural specialists.</p>
+                        <a href="experts.html" class="btn">Find Experts</a>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-img">
+                        <img src="https://www.cabi.org/wp-content/uploads/International-development/Centres/ICM-Diagram-FINAL.jpg" alt="Crop Database">
+                    </div>
+                    <div class="feature-content">
+                        <h3>Comprehensive Crop Database</h3>
+                        <p>Access detailed information about various crops, including growth requirements, common diseases, and treatment methods.</p>
+                        <a href="crops.html" class="btn">Browse Crops</a>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-img">
+                        <img src="https://cdn.shopify.com/s/files/1/0722/2059/files/thumbnail_3bc692ae-054d-4e87-ab98-1eddf2f10744.jpg?v=1751385742" alt="Problem Solutions">
+                    </div>
+                    <div class="feature-content">
+                        <h3>Quick Problem Solutions</h3>
+                        <p>Report new crop diseases and get timely solutions from our network of agricultural experts.</p>
+                        <a href="crops.html" class="btn">Report Issue</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About AgriCare</h3>
+                    <p>AgriCare is a platform dedicated to connecting farmers with agricultural experts to improve crop yield, solve farming challenges, and promote sustainable agriculture.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="experts.html">Experts</a></li>
+                        <li><a href="crops.html">Crops</a></li>
+                        <li><a href="chat.html">Chat</a></li>
+                        <li><a href="contact-form.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Information</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Bharatpur-9, Chitwan</p>
+                    <p><i class="fas fa-phone"></i> +977 9767467837</p>
+                    <p><i class="fas fa-envelope"></i> siddharthasapkota0621@gmail.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AgriCare. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {  
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
