@@ -91,6 +91,10 @@
     </div>
   </div>
 
+  <div class="englngbtn">
+    <button class="eng-btn" id="eng-lng-btn"><i class="fas fa-language"></i>English</button>
+  </div>
+
   <div class="back-btn-container">
     <button class="back-btn" id="back-home-btn"><i class="fas fa-home"></i> होममा फर्कनुहोस्</button>
   </div>
@@ -187,6 +191,12 @@
 
       backHomeBtn.addEventListener('click', () => {
         window.location.href = './farmer-dashboard-np.html';
+      });
+
+      const engLngBtn = document.getElementById('eng-lng-btn');
+
+      engLngBtn.addEventListener('click', () => {
+        window.location.href = './contact-form.html';
       });
     });
   </script>

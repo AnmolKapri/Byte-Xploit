@@ -230,7 +230,16 @@ select {
     margin: 18px 0 28px;
     width: 100%;
 }
-.back-btn {
+
+.englngbtn {
+    display: flex;
+    justify-content: center;
+    margin: 18px 0 28px;
+    width: 100%;
+}
+
+.eng-btn
+{
     background: #fff;
     color: #145a32;
     border: 2px solid #145a32;
@@ -242,6 +251,35 @@ select {
     display: inline-flex;
     align-items: center;
     gap: 10px;
+}
+
+.nep-btn
+{
+    background: #fff;
+    color: #145a32;
+    border: 2px solid #145a32;
+    padding: 10px 24px;
+    border-radius: 28px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.back-btn {
+    background: #fff;
+    color: #145a32;
+    border: 2px solid #145a32;
+    padding: 10px 24px;
+    border-radius: 28px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
 }
 .back-btn:hover {
     background: #145a32;

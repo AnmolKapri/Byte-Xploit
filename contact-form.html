@@ -91,6 +91,10 @@
     </div>
   </div>
 
+  <div class="nepLngBtn">
+    <button class="nep-btn" id="nep-lng-btn"><i class="fas fa-language"></i>नेपाली</button>
+  </div>
+
   <div class="back-btn-container">
     <button class="back-btn" id="back-home-btn"><i class="fas fa-home"></i> Back to Home</button>
   </div>
@@ -187,6 +191,12 @@
 
       backHomeBtn.addEventListener('click', () => {
         window.location.href = './farmer-dashboard.html';
+      });
+
+      const nepLngBtn = document.getElementById('nep-lng-btn');
+
+      nepLngBtn.addEventListener('click', () => {
+        window.location.href = './contact-form-np.html';
       });
     });
   </script>
