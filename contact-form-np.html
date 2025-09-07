@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>हामीलाई सम्पर्क गर्नुहोस् - एग्रीकेयर</title>
+  <link rel="icon" type="image/png" href="images/logo-circular.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/contact-form.css">
+  <style>
+  #val{
+    height: 20px;
+    width: auto;
+  }
+  </style>
+</head> 
+<body>
+  <div class="contact-wrapper">
+    <div class="contact-info">
+      <div class="contact-logo"><img src="images/logo-circular.png" alt="AgriCare Logo" class="logo-circular"></div>
+      <div class="contact-detail">
+        <i class="fas fa-map-marker-alt"></i>
+        <div class="contact-words">
+          <h3>हाम्रो स्थान</h3>
+          <p>नारायणी मोडेल मावि, भरतपुर–१०, चितवन</p>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <i class="fas fa-envelope"></i>
+        <div class="contact-words">
+          <h3>हामीलाई इमेल गर्नुहोस्</h3>
+          <p>siddharthasapkota0621@gmail.com<br>kaprianmol0@gmail.com</p>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <i class="fas fa-phone-alt"></i>
+        <div class="contact-words">
+          <h3>हामीलाई कल गर्नुहोस्</h3>
+          <p>+९७७ ९७६७४६७८३७<br>+९७७ ९७४५३५९५०७</p>
+        </div>
+      </div>
+      <div class="contact-social">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <h2 class="contact-title">सम्पर्कमा रहनुहोस्</h2>
+
+      <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="4ffc7ed2-15ac-4b0e-ab88-938422f660fb" />
+        <input type="hidden" name="subject" value="New Contact Form Submission from AgriCare" />
+        <input type="hidden" name="from_name" value="AgriCare Contact Form" />
+        <input type="checkbox" name="botcheck" style="display:none" />
+
+        <div class="contact-grid">
+          <div class="contact-group">
+            <label for="contact-name">पूरा नाम *</label>
+            <input type="text" id="contact-name" name="name" placeholder="तपाईंको पूरा नाम" required />
+          </div>
+          <div class="contact-group">
+            <label for="contact-email">इमेल ठेगाना *</label>
+            <input type="email" id="contact-email" name="email" placeholder="तपाईंको इमेल ठेगाना" required />
+          </div>
+          <div class="contact-group">
+            <label for="contact-phone">फोन नम्बर</label>
+            <input type="tel" id="contact-phone" name="phone" placeholder="तपाईको फोन नम्बर" />
+          </div>
+          <div class="contact-group">
+            <label for="contact-inquiry">सोधपुछ प्रकार</label>
+            <select id="contact-inquiry" name="inquiry_type">
+              <option value=""id="val">एक विकल्प चयन</option>
+              <option value="general">सामान्य जानकारी</option>
+              <option value="support">प्राविधिक समर्थन</option>
+              <option value="partnership">साझेदारी</option>
+              <option value="complaint">गुनासो</option>
+              <option value="other">अन्य</option>
+            </select>
+          </div>
+          <div class="contact-group contact-full">
+            <label for="contact-message">तपाईंको सन्देश *</label>
+            <textarea id="contact-message" name="message" placeholder="हामी तपाईंलाई कसरी मद्दत गर्न सक्छौं?" required maxlength="1000"></textarea>
+            <div class="character-count" id="contact-char-count">०/१००० वर्णहरू</div>
+          </div>
+        </div>
+
+        <button type="submit" class="contact-send-btn">सन्देश पठाउनुहोस् <i class="fas fa-paper-plane"></i></button>
+
+        <div class="contact-success" id="contact-success-msg"><i class="fas fa-check-circle"></i> तपाईंको सन्देशको लागि धन्यवाद! हामी चाँडै नै तपाईंलाई सम्पर्क गर्नेछौं।</div>
+        <div class="contact-error" id="contact-error-msg"><i class="fas fa-exclamation-circle"></i>तपाईंको सन्देश पठाउने क्रममा त्रुटि भयो। कृपया फेरि प्रयास गर्नुहोस्।</div>
+      </form>
+
+      <div class="contact-footer"><p>हामी सामान्यतया व्यापारिक दिनहरूमा २४ घण्टा भित्र जवाफ दिन्छौं।</p></div>
+    </div>
+  </div>
+
+  <div class="back-btn-container">
+    <button class="back-btn" id="back-home-btn"><i class="fas fa-home"></i> होममा फर्कनुहोस्</button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      const form = document.getElementById('contact-form');
+      const successMessage = document.getElementById('contact-success-msg');
+      const errorMessage = document.getElementById('contact-error-msg');
+      const charCount = document.getElementById('contact-char-count');
+      const messageTextarea = document.getElementById('contact-message');
+      const inputs = form.querySelectorAll('input, textarea, select');
+
+      messageTextarea.addEventListener('input', function(){
+        const length = this.value.length;
+        charCount.textContent = `${length}/१000 वर्णहरू`;
+        if(length > 900) charCount.classList.add('low'); else charCount.classList.remove('low');
+        successMessage.style.display = 'none';
+        errorMessage.style.display = 'none';
+      });
+
+      inputs.forEach(input => {
+        input.addEventListener('input', () => {
+          successMessage.style.display = 'none';
+          errorMessage.style.display = 'none';
+          input.style.borderColor = '#e6e6e6';
+        });
+      });
+
+      form.addEventListener('submit', async function(e){
+        e.preventDefault();
+        let isValid = true;
+        const requiredInputs = form.querySelectorAll('[required]');
+        requiredInputs.forEach(input => {
+          if(!input.value.trim()){
+            isValid = false;
+            input.style.borderColor = '#dc3545';
+          }
+        });
+        const emailInput = document.getElementById('contact-email');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if(emailInput.value && !emailRegex.test(emailInput.value)){
+          isValid = false;
+          emailInput.style.borderColor = '#dc3545';
+          errorMessage.textContent = 'Please enter a valid email address.';
+          errorMessage.style.display = 'block';
+          return;
+        }
+        const phoneInput = document.getElementById('contact-phone');
+        if(phoneInput.value){
+          const phoneRegex = /^[+]?[\d\s\-()]{10,}$/;
+          if(!phoneRegex.test(phoneInput.value)){
+            isValid = false;
+            phoneInput.style.borderColor = '#dc3545';
+            errorMessage.textContent = 'Please enter a valid phone number.';
+            errorMessage.style.display = 'block';
+            return;
+          }
+        }
+        if(!isValid){
+          errorMessage.textContent = 'Please fill in all required fields.';
+          errorMessage.style.display = 'block';
+          return;
+        }
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
+        submitBtn.disabled = true;
+
+        const formData = new FormData(form);
+        try{
+          const response = await fetch(form.action, {method:'POST',body:formData,headers:{'Accept':'application/json'}});
+          const result = await response.json();
+          if(response.ok && result.success){
+            successMessage.style.display = 'block';
+            form.reset();
+            charCount.textContent = '0/1000 characters';
+            charCount.classList.remove('low');
+          } else {
+            errorMessage.textContent = result.message || 'There was an error sending your message. Please try again.';
+            errorMessage.style.display = 'block';
+          }
+        } catch(err){
+          errorMessage.textContent = 'There was an error sending your message. Please try again.';
+          errorMessage.style.display = 'block';
+        } finally {
+          submitBtn.innerHTML = originalBtnText;
+          submitBtn.disabled = false;
+        }
+      });
+
+      const backHomeBtn = document.getElementById('back-home-btn');
+
+      backHomeBtn.addEventListener('click', () => {
+        window.location.href = './farmer-dashboard-np.html';
+      });
+    });
+  </script>
+</body>
+</html>

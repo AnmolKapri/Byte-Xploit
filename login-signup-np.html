@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>एग्रीकेयर - प्रमाणीकरण</title>
+    <link rel="icon" type="image/png" href="images/logo-circular.png">
+
+
+    <!-- Firebase SDK -->
+
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <link rel="stylesheet" href="css/login-signup.css">
+
+</head>
+<body> 
+    <div class="mainBox">
+        <div class="WebName">एग्रीकेयर</div>
+        <div class="bigText">
+            <div class="bigTitle login">लगइन फारम</div>
+            <div class="bigTitle signup">किसान साइनअप फारम</div>
+        </div>
+
+
+        <div class="formArea">
+            <div class="slideButtons">
+                <input type="radio" name="slide" id="loginRadio" checked>
+                <input type="radio" name="slide" id="signupRadio">
+                <label for="loginRadio" class="slide login">लगइन</label>
+                <label for="signupRadio" class="slide signup">साइनअप</label>
+                <div class="sliderTab"></div>
+            </div>
+
+            
+            <div class="formInside">
+                <form action="#" class="login" id="loginForm">
+                    <div class="msg error" id="loginError"></div>
+                    <div class="msg success" id="loginOk"></div>
+                    <div class="field">
+                        <input type="text" id="loginEmail" placeholder="Email Address" required>
+                    </div>
+                    <div class="field">
+                        <input type="password" id="loginPassword" placeholder="Password" required>
+                    </div>
+                    <div class="field btn">
+                        <div class="btnLayer"></div>
+                        <input type="submit" value="Login">
+                    </div>
+                    <div class="professionalInfo">
+                        <p><strong>विशेषज्ञहरू:</strong> Use the credentials provided after your application has been verified.</p>
+                    </div>
+                </form>
+
+
+                <form action="#" class="signup" id="signupForm">
+                    <div class="msg error" id="signupErr"></div>
+                    <div class="msg success" id="signupOk"></div>
+                    <div class="field">
+                        <input type="text" id="signupName" placeholder="Full Name" required>
+                    </div>
+                    <div class="field">
+                        <input type="text" id="signupEmail" placeholder="Email Address" required>
+                    </div>
+                    <div class="field">
+                        <input type="text" id="signupLoc" placeholder="Location" required>
+                    </div>
+                    <div class="field">
+                        <input type="password" id="signupPass" placeholder="Password" required>
+                    </div>
+                    <div class="field btn">
+                        <div class="btnLayer"></div>
+                        <input type="submit" value="Signup">
+                    </div>
+                    <div class="signupLink">Are you a professional? <a href="#" id="proLink">Apply through our Google Form</a></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyD_NltDzkNGMH8cIrB3vChPXKR5Np8UUKI",
+            authDomain: "agricare-babrathon.firebaseapp.com",
+            projectId: "agricare-babrathon",
+            storageBucket: "agricare-babrathon.firebasestorage.app",
+            messagingSenderId: "795598532498",
+            appId: "1:795598532498:web:c42a9d93089eb53a129b4b",
+            measurementId: "G-BCB4YBRLT0"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+
+        // DOM elements
+
+
+        const loginText = document.querySelector(".bigText .login");
+        const loginForm = document.querySelector("form.login");
+        const loginBtn = document.querySelector("label.login");
+        const signupBtn = document.querySelector("label.signup");
+        const proLink = document.getElementById("proLink");
+        
+
+        // Form Changing
+
+
+        signupBtn.onclick = (() => {
+            loginForm.style.marginLeft = "-50%";
+            loginText.style.marginLeft = "-50%";
+        });
+        
+        loginBtn.onclick = (() => {
+            loginForm.style.marginLeft = "0%";
+            loginText.style.marginLeft = "0%";
+        });
+
+        
+        // Professional Form Link
+
+
+        proLink.onclick = function(e) {
+            e.preventDefault();
+            window.open('https://forms.gle/LiLNM8mJQU16LbZY7', '_blank');
+        };
+        
+        function showMsg(element, message, isError = true) {
+            element.textContent = message;
+            element.style.display = "block";
+            element.className = isError ? "msg error" : "msg success";
+            setTimeout(() => {
+                element.style.display = "none";
+            }, 5000);
+        }
+
+        
+        // Farmer Signup
+
+
+        document.getElementById("signupForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const name = document.getElementById("signupName").value;
+            const email = document.getElementById("signupEmail").value;
+            const password = document.getElementById("signupPass").value;
+            const location = document.getElementById("signupLoc").value;
+            const signupErr = document.getElementById("signupErr");
+            const signupOk = document.getElementById("signupOk");
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    return db.collection("users").doc(user.uid).set({
+                        fullName: name,
+                        email: email,
+                        location: location,
+                        role: "farmer",
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                })
+                .then(() => {
+                    showMsg(signupOk, "Account created successfully! You can now login.", false);
+                    document.getElementById("signupForm").reset();
+                    setTimeout(() => {
+                        loginBtn.click();
+                    }, 2000);
+                })
+                .catch((error) => {
+                    showMsg(signupErr, error.message);
+                });
+        });
+        document.getElementById("loginForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
+            const loginError = document.getElementById("loginError");
+            const loginOk = document.getElementById("loginOk");
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    return db.collection("users").doc(user.uid).get();
+                })
+                .then((doc) => {
+                    if (doc.exists) {
+                        const userData = doc.data();
+                        showMsg(loginOk, "Login successful! Redirecting...", false);
+                        setTimeout(() => {
+                            if (userData.role === "farmer") {
+                                window.location.href = "./farmer/farmer-dashboard.html";
+                            } else if (userData.role === "professional") {
+                                window.location.href = "./professional/professional-dashboard.html";
+                            }
+                        }, 2000);
+                    } else {
+                        showMsg(loginError, "User data not found. Please contact support.");
+                    }
+                })
+                .catch((error) => {
+                    showMsg(loginError, error.message);
+                });
+        });
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                db.collection("users").doc(user.uid).get()
+                    .then((doc) => {
+                        if (doc.exists) {
+                            const userData = doc.data();
+                            if (userData.role === "farmer") {
+                                window.location.href = "farmer-dashboard.html";
+                            } else if (userData.role === "professional") {
+                                window.location.href = "professional-dashboard.html";
+                            }
+                        }
+                    });
+            }
+        });
+    </script>
+</body>
+</html>
