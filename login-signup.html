@@ -7,8 +7,6 @@
     <link rel="icon" type="image/png" href="images/logo-circular.png">
 
 
-    <!-- Firebase SDK -->
-
 
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
@@ -98,8 +96,6 @@
         const db = firebase.firestore();
 
 
-        // DOM elements
-
 
         const loginText = document.querySelector(".bigText .login");
         const loginForm = document.querySelector("form.login");
@@ -107,8 +103,6 @@
         const signupBtn = document.querySelector("label.signup");
         const proLink = document.getElementById("proLink");
         
-
-        // Form Changing
 
 
         signupBtn.onclick = (() => {
@@ -120,9 +114,6 @@
             loginForm.style.marginLeft = "0%";
             loginText.style.marginLeft = "0%";
         });
-
-        
-        // Professional Form Link
 
 
         proLink.onclick = function(e) {
@@ -139,8 +130,6 @@
             }, 5000);
         }
 
-        
-        // Farmer Signup
 
 
         document.getElementById("signupForm").addEventListener("submit", (e) => {
