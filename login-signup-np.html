@@ -41,17 +41,17 @@
                     <div class="msg error" id="loginError"></div>
                     <div class="msg success" id="loginOk"></div>
                     <div class="field">
-                        <input type="text" id="loginEmail" placeholder="Email Address" required>
+                        <input type="text" id="loginEmail" placeholder="इमेल ठेगाना" required>
                     </div>
                     <div class="field">
-                        <input type="password" id="loginPassword" placeholder="Password" required>
+                        <input type="password" id="loginPassword" placeholder="पासवर्ड" required>
                     </div>
                     <div class="field btn">
                         <div class="btnLayer"></div>
-                        <input type="submit" value="Login">
+                        <input type="submit" value="लगइन">
                     </div>
                     <div class="professionalInfo">
-                        <p><strong>विशेषज्ञहरू:</strong> Use the credentials provided after your application has been verified.</p>
+                        <p><strong>विशेषज्ञहरू:</strong> तपाईंको आवेदन प्रमाणित भएपछि प्रदान गरिएका प्रमाणहरू प्रयोग गर्नुहोस्।</p>
                     </div>
                 </form>
 
@@ -60,22 +60,22 @@
                     <div class="msg error" id="signupErr"></div>
                     <div class="msg success" id="signupOk"></div>
                     <div class="field">
-                        <input type="text" id="signupName" placeholder="Full Name" required>
+                        <input type="text" id="signupName" placeholder="पूरा नाम" required>
                     </div>
                     <div class="field">
-                        <input type="text" id="signupEmail" placeholder="Email Address" required>
+                        <input type="text" id="signupEmail" placeholder="इमेल ठेगाना" required>
                     </div>
                     <div class="field">
-                        <input type="text" id="signupLoc" placeholder="Location" required>
+                        <input type="text" id="signupLoc" placeholder="स्थान" required>
                     </div>
                     <div class="field">
-                        <input type="password" id="signupPass" placeholder="Password" required>
+                        <input type="password" id="signupPass" placeholder="पासवर्ड" required>
                     </div>
                     <div class="field btn">
                         <div class="btnLayer"></div>
-                        <input type="submit" value="Signup">
+                        <input type="submit" value="साइनअप">
                     </div>
-                    <div class="signupLink">Are you a professional? <a href="#" id="redlink">Apply through our Google Form</a></div>
+                    <div class="signupLink">के तपाईं पेशेवर हुनुहुन्छ? <a href="#" id="proLink">हाम्रो गुगल फारम मार्फत आवेदन दिनुहोस्</a></div>
                 </form>
             </div>
         </div>
@@ -97,12 +97,20 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
 
+
+        // DOM elements
+
+
         const loginText = document.querySelector(".bigText .login");
         const loginForm = document.querySelector("form.login");
         const loginBtn = document.querySelector("label.login");
         const signupBtn = document.querySelector("label.signup");
-        const redlink = document.getElementById("redlink");
+        const proLink = document.getElementById("proLink");
         
+
+        // Form Changing
+
+
         signupBtn.onclick = (() => {
             loginForm.style.marginLeft = "-50%";
             loginText.style.marginLeft = "-50%";
@@ -113,7 +121,11 @@
             loginText.style.marginLeft = "0%";
         });
 
-        redlink.onclick = function(e) {
+        
+        // Professional Form Link
+
+
+        proLink.onclick = function(e) {
             e.preventDefault();
             window.open('https://forms.gle/LiLNM8mJQU16LbZY7', '_blank');
         };
@@ -126,6 +138,10 @@
                 element.style.display = "none";
             }, 5000);
         }
+
+        
+        // Farmer Signup
+
 
         document.getElementById("signupForm").addEventListener("submit", (e) => {
             e.preventDefault();
@@ -171,16 +187,16 @@
                 .then((doc) => {
                     if (doc.exists) {
                         const userData = doc.data();
-                        showMsg(loginOk, "Login successful! Please Wait...", false);
+                        showMsg(loginOk, "Login successful! Redirecting...", false);
                         setTimeout(() => {
                             if (userData.role === "farmer") {
-                                window.location.href = "./farmer/farmer-dashboard-np-np.html";
+                                window.location.href = "./farmer/farmer-dashboard.html";
                             } else if (userData.role === "professional") {
-                                window.location.href = "./professional/professional-dashboard-np-np.html";
+                                window.location.href = "./professional/professional-dashboard.html";
                             }
                         }, 2000);
                     } else {
-                        showMsg(loginError, "Sorry.User data not found.");
+                        showMsg(loginError, "User data not found. Please contact support.");
                     }
                 })
                 .catch((error) => {
@@ -194,9 +210,9 @@
                         if (doc.exists) {
                             const userData = doc.data();
                             if (userData.role === "farmer") {
-                                window.location.href = "farmer-dashboard-np.html";
+                                window.location.href = "farmer-dashboard.html";
                             } else if (userData.role === "professional") {
-                                window.location.href = "professional-dashboard-np.html";
+                                window.location.href = "professional-dashboard.html";
                             }
                         }
                     });

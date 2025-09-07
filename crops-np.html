@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>एग्रीकेयर - बाली डाटाबेस</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #18a9cd 0%, #1e7e34 100%);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .site-header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .site-logo {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .site-logo i {
+            margin-right: 10px;
+            color: #aaf0d1;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        nav ul li a:hover, nav ul li a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .notification-btn, .profile-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .notification-btn:hover, .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .page-header {
+            text-align: center;
+            padding: 40px 0;
+            color: #145a32;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .search-container-section {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+        
+        .search-input-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .search-input-wrapper {
+            position: relative;
+            flex-grow: 1;
+        }
+        
+        .search-input-wrapper input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input-wrapper input:focus {
+            border-color: #28a745;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+        }
+        
+        .search-input-wrapper i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+        
+        .filter-toggle-button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        
+        .filter-toggle-button i {
+            margin-right: 8px;
+        }
+        
+        .filter-toggle-button:hover {
+            background: #218838;
+        }
+        
+        .filter-options-container {
+            display: none;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .filter-options-container.active {
+            display: flex;
+        }
+        
+        .filter-option-button {
+            background: #e9f5e9;
+            border: 2px solid #28a745;
+            color: #145a32;
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .filter-option-button:hover, .filter-option-button.active {
+            background: #28a745;
+            color: white;
+        }
+        
+        .crops-listing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .crop-card-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .crop-card-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .crop-image-container {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .crop-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .crop-card-item:hover .crop-image-container img {
+            transform: scale(1.05);
+        }
+        
+        .crop-info-content {
+            padding: 20px;
+        }
+        
+        .crop-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #145a32;
+        }
+        
+        .crop-scientific-name {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .crop-short-description {
+            color: #666;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .crop-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .stat-value {
+            font-weight: 600;
+            color: #145a32;
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .modal-content-wrapper {
+            background: white;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header-section {
+            background: linear-gradient(135deg, #145a32 0%, #28a745 100%);
+            color: white;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .modal-close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .modal-main-title {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .modal-sub-title {
+            font-style: italic;
+            opacity: 0.9;
+        }
+        
+        .modal-body-content {
+            padding: 20px;
+        }
+        
+        .modal-section-block {
+            margin-bottom: 25px;
+        }
+        
+        .modal-section-heading {
+            font-size: 1.3rem;
+            color: #145a32;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e9f5e9;
+        }
+        
+        .disease-info-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+        
+        .disease-title {
+            font-weight: 600;
+            color: #145a32;
+            margin-bottom: 10px;
+        }
+        
+        .disease-description-text {
+            margin-bottom: 10px;
+            color: #666;
+        }
+        
+        .solution-step {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .solution-step:before {
+            content: "•";
+            color: #28a745;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .report-disease-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 50px;
+        }
+        
+        .section-main-title {
+            font-size: 1.5rem;
+            color: #145a32;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .disease-report-form-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-field-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-field-group.full-width-field {
+            grid-column: 1 / -1;
+        }
+        
+        .form-field-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-field-group input,
+        .form-field-group select,
+        .form-field-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-field-group input:focus,
+        .form-field-group select:focus,
+        .form-field-group textarea:focus {
+            border-color: #28a745;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+        }
+        
+        .form-field-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .submit-button {
+            background: linear-gradient(135deg, #145a32 0%, #28a745 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 20px auto 0;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .submit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        footer {
+            background: #145a32;
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section-block h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section-block h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background: #28a745;
+        }
+        
+        .footer-section-block p {
+            margin-bottom: 15px;
+        }
+        
+        .footer-section-block ul {
+            list-style: none;
+        }
+        
+        .footer-section-block ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section-block ul li a {
+            color: #aaf0d1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section-block ul li a:hover {
+            color: white;
+        }
+        
+        .social-media-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-media-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-media-icons a:hover {
+            background: #28a745;
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom-section {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .site-header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 10px;
+            }
+            
+            .user-actions {
+                margin-top: 20px;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            .crops-listing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-input-container {
+                flex-direction: column;
+            }
+            
+            .disease-report-form-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 5px 0;
+            }
+            
+            .filter-options-container {
+                justify-content: center;
+            }
+            
+            .modal-content-wrapper {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="site-header-content">
+                <div class="site-logo">
+                    <img src="images/logo-rec.png" alt="AgriCare Logo" style="height:40px; margin-right:10px;">
+                </div>
+                <nav>
+                   <ul>
+                        <li><a href="farmer-dashboard-np.html" class="active">होम</a></li>
+                        <li><a href="experts-np.html">विशेषज्ञहरू</a></li>
+                        <li><a href="crops-np.html">बालीहरू</a></li>
+                        <li><a href="contact-form-np.html">हाम्रो सम्पर्क</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>बाली डाटाबेस</h1>
+            <p>विभिन्न बालीहरू, सामान्य रोगहरू, र तिनीहरूको समाधानहरूको बारेमा विस्तृत जानकारी अन्वेषण गर्नुहोस्।</p>
+        </div>
+    </section>
+
+    <section class="search-container-section">
+        <div class="container">
+            <div class="search-input-container">
+                <div class="search-input-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="बाली खोज्नुहोस्..." id="crop-search-input">
+                </div>
+                <button class="filter-toggle-button" id="filter-toggle-button">
+                    <i class="fas fa-filter"></i> फिल्टर
+                </button>
+            </div>
+            <div class="filter-options-container" id="filter-options-container">
+                <button class="filter-option-button active">सबै बाली</button>
+                <button class="filter-option-button">अनाज</button>
+                <button class="filter-option-button">तरकारी</button>
+                <button class="filter-option-button">फलहरू</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="crops-listing-section">
+        <div class="container">
+            <div class="crops-listing-grid" id="crops-grid-container">
+            </div>
+        </div>
+    </section>
+
+    <section class="report-disease-section">
+        <div class="container">
+            <h2 class="section-main-title">नयाँ रोग रिपोर्ट गर्नुहोस्</h2>
+            <form class="disease-report-form-wrapper" id="disease-report-form" action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="4ffc7ed2-15ac-4b0e-ab88-938422f660fb">
+                <input type="hidden" name="subject" value="New Disease Report from AgriCare">
+                <input type="hidden" name="from_name" value="AgriCare Disease Report">
+                <input type="checkbox" name="botcheck" style="display: none;">
+                
+                <div id="success-message" class="msg success" style="display: none;">
+                    <i class="fas fa-check-circle"></i> तपाईंको रिपोर्टको लागि धन्यवाद! हामी चाँडै यसको समीक्षा गर्नेछौं।
+                </div>
+                <div id="error-message" class="msg error" style="display: none;">
+                    <i class="fas fa-exclamation-circle"></i> तपाईंको रिपोर्ट पेश गर्दा त्रुटि भयो। कृपया फेरि प्रयास गर्नुहोस्।
+                </div>
+
+                <div class="form-field-group">
+                    <label for="select-crop-dropdown">क्रप चयन गर्नुहोस्</label>
+                    <select id="select-crop-dropdown" name="crop" required>
+                        <option value="">फसल चयन गर्नुहोस्</option>
+                        <option value="wheat">गहुँ</option>
+                        <option value="rice">चामल</option>
+                        <option value="corn">मकै</option>
+                        <option value="tomato">गोलभेडा</option>
+                        <option value="potato">आलु</option>
+                    </select>
+                </div>
+                <div class="form-field-group">
+                    <label for="disease-name-input">रोगको नाम</label>
+                    <input type="text" id="disease-name-input" name="disease_name" placeholder="रोगको नाम प्रविष्ट गर्नुहोस्" required>
+                </div>
+                <div class="form-field-group full-width-field">
+                    <label for="disease-description-textarea">रोग विवरण</label>
+                    <textarea id="disease-description-textarea" name="disease_description" placeholder="रोगको लक्षण र उपस्थिति वर्णन गर्नुहोस्" required></textarea>
+                </div>
+                <div class="form-field-group full-width-field">
+                    <label for="disease-impact-textarea">बालीमा असर</label>
+                    <textarea id="disease-impact-textarea" name="disease_impact" placeholder="रोगले बालीलाई कसरी असर गर्छ वर्णन गर्नुहोस्" required></textarea>
+                </div>
+                <button type="submit" class="submit-button" id="submit-report-button">प्रतिवेदन पेश गर्नुहोस्</button>
+            </form>
+        </div>
+    </section>
+
+    <div class="modal-overlay" id="crop-details-modal">
+        <div class="modal-content-wrapper">
+            <div class="modal-header-section">
+                <button class="modal-close-button" id="close-modal-button">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h2 class="modal-main-title" id="modal-crop-name">फसलको नाम</h2>
+                <p class="modal-sub-title" id="modal-crop-scientific-name">वैज्ञानिक नाम</p>
+            </div>
+            <div class="modal-body-content">
+                <div class="modal-section-block">
+                    <h3 class="modal-section-heading">अवलोकन</h3>
+                    <p id="modal-crop-description">क्रप विवरण यहाँ देखा पर्नेछ।</p>
+                </div>
+                <div class="modal-section-block">
+                    <h3 class="modal-section-heading">बढ्दो अवस्था</h3>
+                    <div id="modal-growing-conditions">बढ्दो अवस्था देखा पर्नेछ यहाँ।</div>
+                </div>
+                <div class="modal-section-block">
+                    <h3 class="modal-section-heading">सामान्य रोगहरू र समाधानहरू</h3>
+                    <div id="modal-diseases-list">
+                    </div>
+                </div>
+                <div class="modal-section-block">
+                    <h3 class="modal-section-heading">मल र कीटनाशक सिफारिसहरू</h3>
+                    <div id="modal-recommendations">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content-wrapper">
+                <div class="footer-section-block">
+                    <h3>एग्रीकेयर को बारेमा</h3>
+                    <p>एग्रीकेयर भनेको किसानहरूलाई कृषि विज्ञहरूसँग जोड्न समर्पित प्लेटफर्म हो जसले बाली उत्पादन सुधार गर्न, कृषि चुनौतीहरू समाधान गर्न र दिगो कृषि प्रवर्द्धन गर्न मद्दत गर्दछ।</p>
+                </div>
+                <div class="footer-section-block">
+                    <h3>द्रुत लिङ्कहरू</h3>
+                    <ul>
+                        <li><a href="farmer-dashboard-np.html" class="active">होम</a></li>
+                        <li><a href="experts-np.html">विशेषज्ञहरू</a></li>
+                        <li><a href="crops-np.html">बालीहरू</a></li>
+                        <li><a href="contact-form-np.html">हाम्रो सम्पर्क</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section-block">
+                    <h3>सम्पर्क जानकारी</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> भरतपुर-९, चितवन</p>
+                    <p><i class="fas fa-phone"></i> +९७७ ९७६७४६७८३७</p>
+                    <p><i class="fas fa-envelope"></i> siddharthasapkota0621@gmail.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom-section">
+                <p>&copy; 2025 AgriCare. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const crops = [
+            {
+                id: 1,
+                name: "गहुँ",
+                scientificName: "ट्रिटिकम एस्टिभम",
+                category: "अनाज",
+                image: "https://cdn.britannica.com/90/94190-050-C0BA6A58/Cereal-crops-wheat-reproduction.jpg",
+                description: "गहुँ एक प्रकारको घाँस हो जुन यसको बीउको लागि व्यापक रूपमा उब्जाउ गरिन्छ, एक अन्नको अन्न जुन विश्वव्यापी रूपमा मुख्य खाना हो। गहुँका धेरै प्रजातिहरू मिलेर ट्रिटिकम प्रजाति बनाउँछन्; सबैभन्दा व्यापक रूपमा उब्जाउ गरिएको सामान्य गहुँ हो।",
+                growingConditions: "गहुँ ७०°F देखि ७५°F (२१°C देखि २४°C) बीचको तापक्रममा राम्रोसँग उम्रन्छ। यसलाई ६.० देखि ७.५ बीचको pH भएको राम्रो पानी निकास भएको माटो चाहिन्छ। गहुँलाई यसको बढ्दो मौसममा लगभग १२-१५ इन्च पानी चाहिन्छ।",
+                diseases: [
+                    {
+                        name: "खिया",
+                        description: "खिया एक फंगल रोग हो जसले पात र डाँठहरूमा सुन्तला-खैरो रंगको फोका निम्त्याउँछ।",
+                        solutions: [
+                            "बिरुवा प्रतिरोधी प्रजातिहरू",
+                            "रोगको पहिलो संकेत देखिने बित्तिकै ढुसीनाशक औषधि प्रयोग गर्नुहोस्",
+                            "फसल घुमाउने अभ्यास गर्नुहोस्",
+                            "संक्रमित बिरुवाको अवशेष हटाउनुहोस् र नष्ट गर्नुहोस्"
+                        ]
+                    },
+                    {
+                        name: "फ्युसेरियम हेड ब्लाइट",
+                        description: "स्क्याब भनेर पनि चिनिने यो फंगल रोगले स्पाइकलेट्स र सुकेका दानाहरूलाई ब्लीच गर्छ।",
+                        solutions: [
+                            "प्रतिरोधी प्रजातिहरू प्रयोग गर्नुहोस्",
+                            "फूल फुल्ने समयमा ढुसीनाशक प्रयोग गर्नुहोस्",
+                            "गैर-होस्ट बालीहरूसँग बाली चक्र अभ्यास गर्नुहोस्",
+                            "हावा परिसंचरण सुधार गर्न रोपण घनत्व समायोजन गर्नुहोस्"
+                        ]
+                    }
+                ],
+                recommendations: {
+                    fertilizer: "माटो परीक्षणको नतिजाको आधारमा प्रति एकर ८०-१०० पाउण्ड नाइट्रोजन, ४०-६० पाउण्ड फस्फोरस र ४०-६० पाउण्ड पोटासियम प्रयोग गर्नुहोस्।",
+                    insecticide: "एफिड नियन्त्रणको लागि साइपरमेथ्रिन वा डेल्टामेथ्रिन भएको कीटनाशक प्रयोग गर्नुहोस्। आर्मीवर्मको लागि, स्पिनोसाड वा ब्यासिलस थुरिन्जिएन्सिस (Bt) प्रयोग गर्नुहोस्।"
+                }
+            },
+            {
+                id: 2,
+                name: "चामल",
+                scientificName: "ओरिजा स्याटिभा",
+                category: "अनाज",
+                image: "https://sustainablerice.org/wp-content/uploads/2022/11/shutterstock_1415318663-scaled.jpeg",
+                description: "Rबरफ घाँस प्रजाति ओरिजा सेटिभा (एसियाली चामल) वा ओरिजा ग्लाबेरिमा (अफ्रिकी चामल) को बीउ हो। अन्नको रूपमा, यो विश्वको मानव जनसंख्याको ठूलो भागको लागि सबैभन्दा धेरै खपत हुने मुख्य खाना हो।",
+                growingConditions: "धानलाई ७०°F र १००°F (२१°C देखि ३८°C) बीचको तापक्रम भएको तातो र आर्द्र अवस्था चाहिन्छ। यो राम्रो पानी अवधारण क्षमता भएको र ५.० देखि ६.५ बीचको pH भएको माटोको दोमट माटोमा राम्रोसँग उम्रन्छ।",
+                diseases: [
+                    {
+                        name: "ब्याक्टेरियल लीफ ब्लाइट",
+                        description: "यसले पातहरू ओइलाउने र पहेंलो पार्ने गर्छ, जसले गर्दा उत्पादनमा उल्लेखनीय कमी आउँछ।",
+                        solutions: [
+                            "प्रतिरोधी प्रजातिहरू प्रयोग गर्नुहोस्",
+                            "अत्यधिक नाइट्रोजन उर्वरीकरणबाट बच्नुहोस्",
+                            "उचित पानी व्यवस्थापन अभ्यास गर्नुहोस्",
+                            "तामामा आधारित जीवाणुनाशकहरू प्रयोग गर्नुहोस्"
+                        ]
+                    },
+                    {
+                        name: "चामल विस्फोट",
+                        description: "पात, गाँठो र फूलगुच्छामा घाउ निम्त्याउने फंगल रोग।",
+                        solutions: [
+                            "बिरुवा प्रतिरोधी प्रजातिहरू",
+                            "सिलिकन उर्वरक लागू गर्नुहोस्",
+                            "ट्राइसाइक्लाजोल वा एजोक्सिस्ट्रोबिन जस्ता फङ्गिसाइडहरू प्रयोग गर्नुहोस्",
+                            "अत्यधिक नाइट्रोजन प्रयोग नगर्नुहोस्"
+                        ]
+                    }
+                ],
+                recommendations: {
+                    fertilizer: "१२०-१५० किलो नाइट्रोजन/हेक्टर, ६०-८० किलो फोस्फोरस/हेक्टर, र ६०-८० किलो केरो/हेक्टर प्रयोग गर्नुहोस्। नाइट्रोजन प्रयोगलाई ३-४ मात्रामा विभाजन गर्नुहोस्।",
+                    insecticide: "डाँठ बोररहरूको लागि, कार्ट्याप हाइड्रोक्लोराइड वा क्लोरान्ट्रानिलिप्रोल प्रयोग गर्नुहोस्। खैरो बिरुवा हपरहरूको लागि, इमिडाक्लोप्रिड वा थायामेथोक्सम प्रयोग गर्नुहोस्।"
+                }
+            },
+            {
+                id: 3,
+                name: "टमाटर",
+                scientificName: "सोलानम लाइकोपर्सिकम",
+                category: "तरकारी",
+                image: "https://images.unsplash.com/photo-1561136594-7f68413baa99?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+                description: "Tगोलभेडा सोलानम लाइकोपर्सिकम बोटको खाद्य बेरी हो, जसलाई सामान्यतया गोलभेडाको बोट भनेर चिनिन्छ। यो प्रजाति पश्चिमी दक्षिण अमेरिका र मध्य अमेरिकामा उत्पत्ति भएको थियो।",
+                growingConditions: "गोलभेडा ७०°F देखि ८५°F (२१°C देखि २९°C) बीचको तापक्रममा राम्रोसँग उम्रन्छ। तिनीहरूलाई ६.० देखि ६.८ बीचको pH भएको राम्रो पानी निकास भएको, उर्वर माटो चाहिन्छ। गोलभेडालाई दैनिक कम्तिमा ६-८ घण्टा प्रत्यक्ष घाम चाहिन्छ।",
+                diseases: [
+                    {
+                        name: "प्रारम्भिक ब्लाइट",
+                        description: "तल्लो पातहरूमा गाढा घेराहरू भएका कालो दागहरू निम्त्याउँछ, जुन पहेंलो र झर्ने हुन सक्छ।",
+                        solutions: [
+                            "रोगमुक्त बीउ र बिरुवा प्रयोग गर्नुहोस्",
+                            "बाली चक्र अभ्यास गर्नुहोस् (३-४ वर्ष)",
+                            "क्लोरोथालोनिल वा तामामा आधारित ढुसीनाशक प्रयोग गर्नुहोस्",
+                            "माटो छ्याप्नबाट रोक्नको लागि मल्चिङ बिरुवाहरू"
+                        ]
+                    },
+                    {
+                        name: "Blossom End Rot",
+                        description: "क्याल्सियमको कमीले गर्दा फलफूलको तल्लो भागमा कालो, डुबेको क्षेत्रहरू निम्त्याउँछ।",
+                        solutions: [
+                            "लगातार माटोको आर्द्रता कायम राख्नुहोस्",
+                            "क्याल्सियम नाइट्रेट पातको स्प्रे लगाउनुहोस्",
+                            "अति नाइट्रोजन मलको प्रयोग गर्नुहुन्न",
+                            "माटोको परीक्षण गर्नुहोस् र pH लगभग 6.5 वरपर राख्नुहोस्"
+                        ]
+                    }
+                ],
+                recommendations: {
+                    fertilizer: "रोप्नुअघि प्रति १०० वर्ग फिटमा ३-४ पाउण्ड १०-१०-१० मल हाल्नुहोस्। फलहरू लगभग १ इन्च व्यासका हुँदा नाइट्रोजन मलले छेउमा ड्रेसिङ गर्नुहोस्।",
+                    insecticide: "एफिड र सेतो फ्लाईहरूको लागि, कीटनाशक साबुन वा नीमको तेल प्रयोग गर्नुहोस्। टमाटर हर्नवार्महरूका लागि, स्पिनोसड वा ब्यासिलस थुरिन्जिएन्सिस (बीटी) प्रयोग गर्नुहोस्।"
+                }
+            },
+            {
+                id: 4,
+                name: "मकै",
+                scientificName: "मक्का",
+                category: "अनाज",
+                image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80",
+                description: "मकै, जसलाई मकै पनि भनिन्छ, एक अन्नबाली हो जुन लगभग १०,००० वर्ष पहिले दक्षिणी मेक्सिकोका आदिवासीहरूले पहिलो पटक घरपालुवा बनाएका थिए। बिरुवाको पातदार डाँठले परागकण फूलहरू उत्पादन गर्दछ र कान भनिने अण्डाकार फूलहरू अलग गर्दछ जसले दाना वा बीउ उत्पादन गर्दछ।",
+                growingConditions: "मकै ७७°F देखि ९१°F (२५°C देखि ३३°C) बीचको तापक्रममा राम्रोसँग उम्रन्छ। यसलाई राम्रोसँग पानी निकास भएको, ५.८ र ६.८ बीचको pH भएको उर्वर माटो चाहिन्छ। मकैलाई निरन्तर ओसिलोपन चाहिन्छ, विशेष गरी ट्यासलिङ र रेशमिङको समयमा।",
+                diseases: [
+                    {
+                        name: "उत्तरी मकैको पातको डढुवा रोग",
+                        description: "पातहरूमा लामो, खैरो-हरियो वा खैरो घाउहरू निम्त्याउँछ जसले उत्पादनमा उल्लेखनीय कमी ल्याउन सक्छ।",
+                        solutions: [
+                            "बिरुवा प्रतिरोधी हाइब्रिडहरू",
+                            "फसल घुमाउने अभ्यास गर्नुहोस्",
+                            "प्रोपिकोनाजोल वा एजोक्सिस्ट्रोबिन जस्ता फङ्गिसाइडहरू प्रयोग गर्नुहोस्",
+                            "रोगको संक्रमण कम गर्न बाली अवशेष मुनि जोत्नुहोस्"
+                        ]
+                    },
+                    {
+                        name: "Common Rust",
+                        description: "पातहरूमा साना, गोलाकार देखि लामा फोकाहरू निम्त्याउँछ जुन फुटेर रातो-खैरो बीजाणुहरू निस्कन्छ।",
+                        solutions: [
+                            "बिरुवा प्रतिरोधी हाइब्रिडहरू",
+                            "रोग सुरुमा देखा पर्दा ढुसीनाशक औषधि प्रयोग गर्नुहोस्",
+                            "खिया लाग्ने सम्भावना भएका क्षेत्रहरूमा ढिलो रोपण नगर्नुहोस्।"
+                        ]
+                    }
+                ],
+                recommendations: {
+                    fertilizer: "माटो परीक्षणको नतिजाको आधारमा प्रति एकर १२०-१५० पाउण्ड नाइट्रोजन, ४०-६० पाउण्ड फस्फोरस र ४०-८० पाउण्ड पोटासियम प्रयोग गर्नुहोस्।",
+                    insecticide: "मकै बोररको लागि, बाइफेन्थ्रिन वा साइफ्लुथ्रिन प्रयोग गर्नुहोस्। आर्मीवर्मको लागि, स्पिनोसाड वा क्लोरान्ट्रानिलिप्रोल प्रयोग गर्नुहोस्।"
+                }
+            },
+            {
+                id: 5,
+                name: "आलु",
+                scientificName: "Solanum tuberosum",
+                category: "Vegetables",
+                image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+                description: "आलु एक स्टार्चयुक्त खाना हो, यो सोलानम ट्युबेरोसम बिरुवाको कन्द हो र अमेरिकाको मूल निवासी जरा तरकारी हो। यो बिरुवा नाइटशेड परिवार सोलानेसीमा रहेको बारहमासी हो।",
+                growingConditions: "आलु ६०°F देखि ७०°F (१५°C देखि २१°C) बीचको तापक्रममा राम्रोसँग उम्रन्छ। यसलाई राम्रोसँग पानी निकास भएको, खुकुलो माटो चाहिन्छ जसको pH ५.० र ६.० बीच हुन्छ। आलुलाई विशेष गरी कन्द गठनको समयमा निरन्तर ओसिलोपन चाहिन्छ।",
+                diseases: [
+                    {
+                        name: "लेट ब्लाइट",
+                        description: "यसले पात र डाँठहरूमा गाढा, पानीले भिजेका घाउहरू निम्त्याउँछ, आर्द्र अवस्थामा सेतो ढुसी बढ्छ।",
+                        solutions: [
+                            "प्रमाणित रोगमुक्त बीउ आलु रोप्नुहोस्",
+                            "क्लोरोथालोनिल वा म्यान्कोजेब जस्ता ढुसीनाशकहरू प्रयोग गर्नुहोस्",
+                            "काटिएका थुप्रो र स्वयंसेवी बिरुवाहरू नष्ट गर्नुहोस्",
+                            "३-४ वर्षको बाली चक्र अभ्यास गर्नुहोस्"
+                        ]
+                    },
+                    {
+                        name: "आलु स्क्याब",
+                        description: "कन्दको सतहमा खस्रो, कर्क जस्तो घाउ निम्त्याउँछ, जसले गर्दा बजारको गुणस्तर घट्छ।",
+                        solutions: [
+                            "माटोको pH ५.० र ५.२ बीचमा राख्नुहोस्",
+                            "कन्द बनिरहेको बेला माटोलाई निरन्तर ओसिलो राख्नुहोस्",
+                            "बिरुवा प्रतिरोधी प्रजातिहरू",
+                            "गैर-होस्ट बालीहरूसँग बाली चक्र अभ्यास गर्नुहोस्"
+                        ]
+                    }
+                ],
+                recommendations: {
+                    fertilizer: "माटो परीक्षणको नतिजाको आधारमा प्रति एकर १२०-१६० पाउण्ड नाइट्रोजन, ८०-१२० पाउण्ड फस्फोरस र १२०-१६० पाउण्ड पोटासियम प्रयोग गर्नुहोस्।",
+                    insecticide: "कोलोराडो आलुको भुराको लागि, स्पिनोसाड वा एजाडिराक्टिन प्रयोग गर्नुहोस्। एफिडको लागि, इमिडाक्लोप्रिड वा एसिटामिप्रिड प्रयोग गर्नुहोस्।"
+                }
+            },
+            {
+                id: 6,
+                name: "एप्पल",
+                scientificName: "मालुस डोमेस्टिक",
+                category: "फलहरू",
+                image: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+                description: "स्याउ भनेको स्याउको रूख (Malus domestica) द्वारा उत्पादित एक खाद्य फल हो। स्याउका रूखहरू विश्वभर खेती गरिन्छ र यो मालुस जातमा सबैभन्दा धेरै उब्जाउने प्रजाति हो।",
+                growingConditions: "स्याउको उष्णकटिबंधीय हावापानीमा राम्रो वृद्धि हुन्छ जहाँ जाडोयाम चिसो र गर्मीयाम मध्यम हुन्छ। यसलाई ६.० देखि ७.० सम्मको pH भएको राम्रो पानी निकास भएको माटो चाहिन्छ। स्याउलाई जात अनुसार ५००-१००० घण्टासम्म जाडोयाममा चिस्यान (४५°F/७°C भन्दा कम) चाहिन्छ।",
+                diseases: [
+                    {
+                        name: "एप्पल स्क्याब",
+                        description: "पात र फलहरूमा जैतुन-हरियो देखि कालो दागहरू निम्त्याउँछ, जसले गर्दा पात झर्छ र फल फुट्छ।",
+                        solutions: [
+                            "बिरुवा प्रतिरोधी प्रजातिहरू",
+                            "क्याप्टान वा माइक्लोबुटानिल जस्ता फङ्गिसाइडहरू प्रयोग गर्नुहोस्",
+                            "झरेका पातहरू टिपेर नष्ट गर्नुहोस्",
+                            "हावा परिसंचरण सुधार गर्न रूखहरू काट्नुहोस्"
+                        ]
+                    },
+                    {
+                        name: "फायर ब्लाइट",
+                        description: "ब्याक्टेरियाजन्य रोग जसले फूल, मुना र हाँगाहरू ओइलाउने र कालो बनाउने गर्छ।",
+                        solutions: [
+                            "देखिने लक्षणहरू भन्दा १२ इन्च तल संक्रमित हाँगाहरू काट्नुहोस्",
+                            "काट्ने बिचमा काट्ने औजारहरूलाई कीटाणुरहित गर्नुहोस्",
+                            "निष्क्रियताको समयमा तामाको स्प्रे लगाउनुहोस्",
+                            "अत्यधिक नाइट्रोजन उर्वरीकरणबाट बच्नुहोस्"
+                        ]
+                    }
+                ],
+                recommendations: {
+                    fertilizer: "रूखको उमेर पुगेको वर्षमा १-२ पाउण्ड १०-१०-१० मल प्रयोग गर्नुहोस्, परिपक्व रूखहरूको लागि १० पाउण्डसम्म। माटो परीक्षणको नतिजाको आधारमा समायोजन गर्नुहोस्।",
+                    insecticide: "कोडलिङ पुतलीहरूको लागि, स्पिनोसाड वा एसफेनभ्यालेरेट प्रयोग गर्नुहोस्। एफिडहरूको लागि, बागवानी तेल वा कीटनाशक साबुन प्रयोग गर्नुहोस्।"
+                }
+            }
+        ];
+
+        const cropsGridContainer = document.getElementById('crops-grid-container');
+        const cropSearchInput = document.getElementById('crop-search-input');
+        const filterToggleButton = document.getElementById('filter-toggle-button');
+        const filterOptionsContainer = document.getElementById('filter-options-container');
+        const cropDetailsModal = document.getElementById('crop-details-modal');
+        const closeModalButton = document.getElementById('close-modal-button');
+        const diseaseReportForm = document.getElementById('disease-report-form');
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCrops(crops);
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            cropSearchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const filteredCrops = crops.filter(crop => 
+                    crop.name.toLowerCase().includes(searchTerm) ||
+                    crop.scientificName.toLowerCase().includes(searchTerm) ||
+                    crop.description.toLowerCase().includes(searchTerm)
+                );
+                loadCrops(filteredCrops);
+            });
+
+            filterToggleButton.addEventListener('click', function() {
+                filterOptionsContainer.classList.toggle('active');
+            });
+
+            document.querySelectorAll('.filter-option-button').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-option-button').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    const filter = this.textContent;
+                    if (filter === 'All Crops') {
+                        loadCrops(crops);
+                    } else {
+                        const filteredCrops = crops.filter(crop => crop.category === filter);
+                        loadCrops(filteredCrops);
+                    }
+                });
+            });
+
+            closeModalButton.addEventListener('click', function() {
+                cropDetailsModal.style.display = 'none';
+            });
+
+            window.addEventListener('click', function(e) {
+                if (e.target === cropDetailsModal) {
+                    cropDetailsModal.style.display = 'none';
+                }
+            });
+
+            diseaseReportForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const successMessage = document.getElementById('success-message');
+                const errorMessage = document.getElementById('error-message');
+                const submitReportButton = document.getElementById('submit-report-button');
+                const originalBtnText = submitReportButton.innerHTML;
+                
+                successMessage.style.display = 'none';
+                errorMessage.style.display = 'none';
+                
+                submitReportButton.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
+                submitReportButton.disabled = true;
+                
+                const formData = new FormData(this);
+                
+                try {
+                    const response = await fetch(this.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (response.ok && result.success) {
+                        successMessage.style.display = 'block';
+                        this.reset();
+                    } else {
+                        errorMessage.textContent = result.message || 'There was an error sending your report. Please try again.';
+                        errorMessage.style.display = 'block';
+                    }
+                } catch (error) {
+                    errorMessage.textContent = 'There was an error sending your report. Please try again.';
+                    errorMessage.style.display = 'block';
+                } finally {
+                    submitReportButton.innerHTML = originalBtnText;
+                    submitReportButton.disabled = false;
+                }
+            });
+        }
+
+        function loadCrops(cropsArray) {
+            cropsGridContainer.innerHTML = '';
+            
+            if (cropsArray.length === 0) {
+                cropsGridContainer.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-search"></i>
+                        <h3>No crops found</h3>
+                        <p>Try adjusting your search or filter criteria</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            cropsArray.forEach(crop => {
+                const cropCardItem = document.createElement('div');
+                cropCardItem.className = 'crop-card-item';
+                cropCardItem.innerHTML = `
+                    <div class="crop-image-container">
+                        <img src="${crop.image}" alt="${crop.name}">
+                    </div>
+                    <div class="crop-info-content">
+                        <h3 class="crop-title">${crop.name}</h3>
+                        <p class="crop-scientific-name">${crop.scientificName}</p>
+                        <p class="crop-short-description">${crop.description}</p>
+                        <div class="crop-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">${crop.diseases.length}</span>
+                                <span class="stat-label">Diseases</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">${crop.category}</span>
+                                <span class="stat-label">Category</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                cropCardItem.addEventListener('click', () => {
+                    openCropModal(crop);
+                });
+                
+                cropsGridContainer.appendChild(cropCardItem);
+            });
+        }
+
+        function openCropModal(crop) {
+            document.getElementById('modal-crop-name').textContent = crop.name;
+            document.getElementById('modal-crop-scientific-name').textContent = crop.scientificName;
+            document.getElementById('modal-crop-description').textContent = crop.description;
+            
+            document.getElementById('modal-growing-conditions').textContent = crop.growingConditions;
+            
+            const diseasesListContainer = document.getElementById('modal-diseases-list');
+            diseasesListContainer.innerHTML = '';
+            
+            crop.diseases.forEach(disease => {
+                const diseaseElement = document.createElement('div');
+                diseaseElement.className = 'disease-info-item';
+                diseaseElement.innerHTML = `
+                    <h4 class="disease-title">${disease.name}</h4>
+                    <p class="disease-description-text">${disease.description}</p>
+                    <div class="solutions">
+                        ${disease.solutions.map(solution => `
+                            <p class="solution-step">${solution}</p>
+                        `).join('')}
+                    </div>
+                `;
+                diseasesListContainer.appendChild(diseaseElement);
+            });
+            
+            const recommendationsContainer = document.getElementById('modal-recommendations');
+            recommendationsContainer.innerHTML = `
+                <p><strong>Fertilizer:</strong> ${crop.recommendations.fertilizer}</p>
+                <p><strong>Insecticide:</strong> ${crop.recommendations.insecticide}</p>
+            `;
+            
+            cropDetailsModal.style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
