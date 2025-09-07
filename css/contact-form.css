@@ -24,7 +24,7 @@ body {
     box-shadow: 0 18px 36px rgba(0, 0, 0, 0.14);
     overflow: hidden;
     display: flex;
-    animation: fadeIn 0.7s ease-out;
+    /* animation: fadeIn 0.7s ease-out; */
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.5);
 }
@@ -91,11 +91,6 @@ body {
     align-items: flex-start;
     margin-bottom: 20px;
     z-index: 2;
-    transition: transform 0.26s ease;
-}
-
-.contact-detail:hover {
-    transform: translateX(4px);
 }
 
 .contact-detail i {
@@ -134,13 +129,11 @@ body {
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.18);
     color: #fff;
-    transition: all 0.22s ease;
 }
 
 .contact-social a:hover {
     background: #fff;
     color: #28a745;
-    transform: translateY(-3px);
 }
 
 .contact-title {
@@ -171,29 +164,10 @@ body {
 .contact-group {
     margin-bottom: 16px;
     position: relative;
-    opacity: 0;
-    transform: translateY(14px);
-    animation: slideUp 0.52s ease forwards;
 }
 
 .contact-full {
     grid-column: 1 / span 2;
-}
-
-.contact-group:nth-child(1) {
-    animation-delay: 0.08s;
-}
-.contact-group:nth-child(2) {
-    animation-delay: 0.16s;
-}
-.contact-group:nth-child(3) {
-    animation-delay: 0.24s;
-}
-.contact-group:nth-child(4) {
-    animation-delay: 0.32s;
-}
-.contact-group:nth-child(5) {
-    animation-delay: 0.40s;
 }
 
 label {
@@ -247,7 +221,6 @@ select {
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.22s ease;
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -256,20 +229,7 @@ select {
 }
 
 .contact-send-btn:hover {
-    transform: translateY(-3px);
     box-shadow: 0 12px 30px rgba(40, 167, 69, 0.36);
-}
-
-.contact-send-btn:active {
-    transform: translateY(1px);
-}
-
-.contact-send-btn i {
-    transition: transform 0.22s ease;
-}
-
-.contact-send-btn:hover i {
-    transform: translateX(4px);
 }
 
 .back-btn-container {
@@ -288,7 +248,6 @@ select {
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.18s, color 0.18s;
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -313,7 +272,6 @@ select {
     border-radius: 10px;
     margin-top: 14px;
     display: none;
-    animation: fadeIn 0.36s ease;
     border-left: 5px solid #28a745;
 }
 
@@ -324,7 +282,6 @@ select {
     border-radius: 10px;
     margin-top: 14px;
     display: none;
-    animation: shake 0.36s ease;
     border-left: 5px solid #dc3545;
 }
 
@@ -344,21 +301,6 @@ select {
     color: #dc3545;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(14px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    20%, 60% { transform: translateX(-5px); }
-    40%, 80% { transform: translateX(5px); }
-}
 
 @media (max-width: 900px) {
     .contact-wrapper {
