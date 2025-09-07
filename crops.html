@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriCare - Crops Database</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #18a9cd 0%, #1e7e34 100%);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .site-header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .site-logo {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .site-logo i {
+            margin-right: 10px;
+            color: #aaf0d1;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        nav ul li a:hover, nav ul li a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .notification-btn, .profile-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .notification-btn:hover, .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .page-header {
+            text-align: center;
+            padding: 40px 0;
+            color: #145a32;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .search-container-section {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+        
+        .search-input-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .search-input-wrapper {
+            position: relative;
+            flex-grow: 1;
+        }
+        
+        .search-input-wrapper input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input-wrapper input:focus {
+            border-color: #28a745;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+        }
+        
+        .search-input-wrapper i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+        
+        .filter-toggle-button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        
+        .filter-toggle-button i {
+            margin-right: 8px;
+        }
+        
+        .filter-toggle-button:hover {
+            background: #218838;
+        }
+        
+        .filter-options-container {
+            display: none;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .filter-options-container.active {
+            display: flex;
+        }
+        
+        .filter-option-button {
+            background: #e9f5e9;
+            border: 2px solid #28a745;
+            color: #145a32;
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .filter-option-button:hover, .filter-option-button.active {
+            background: #28a745;
+            color: white;
+        }
+        
+        .crops-listing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .crop-card-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .crop-card-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .crop-image-container {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .crop-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .crop-card-item:hover .crop-image-container img {
+            transform: scale(1.05);
+        }
+        
+        .crop-info-content {
+            padding: 20px;
+        }
+        
+        .crop-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #145a32;
+        }
+        
+        .crop-scientific-name {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .crop-short-description {
+            color: #666;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .crop-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .stat-value {
+            font-weight: 600;
+            color: #145a32;
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .modal-content-wrapper {
+            background: white;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header-section {
+            background: linear-gradient(135deg, #145a32 0%, #28a745 100%);
+            color: white;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .modal-close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .modal-main-title {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .modal-sub-title {
+            font-style: italic;
+            opacity: 0.9;
+        }
+        
+        .modal-body-content {
+            padding: 20px;
+        }
+        
+        .modal-section-block {
+            margin-bottom: 25px;
+        }
+        
+        .modal-section-heading {
+            font-size: 1.3rem;
+            color: #145a32;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e9f5e9;
+        }
+        
+        .disease-info-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+        
+        .disease-title {
+            font-weight: 600;
+            color: #145a32;
+            margin-bottom: 10px;
+        }
+        
+        .disease-description-text {
+            margin-bottom: 10px;
+            color: #666;
+        }
+        
+        .solution-step {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .solution-step:before {
+            content: "•";
+            color: #28a745;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .report-disease-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 50px;
+        }
+        
+        .section-main-title {
+            font-size: 1.5rem;
+            color: #145a32;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .disease-report-form-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-field-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-field-group.full-width-field {
+            grid-column: 1 / -1;
+        }
+        
+        .form-field-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-field-group input,
+        .form-field-group select,
+        .form-field-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-field-group input:focus,
+        .form-field-group select:focus,
+        .form-field-group textarea:focus {
+            border-color: #28a745;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+        }
+        
+        .form-field-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .submit-button {
+            background: linear-gradient(135deg, #145a32 0%, #28a745 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 20px auto 0;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .submit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        footer {
+            background: #145a32;
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section-block h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section-block h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background: #28a745;
+        }
+        
+        .footer-section-block p {
+            margin-bottom: 15px;
+        }
+        
+        .footer-section-block ul {
+            list-style: none;
+        }
+        
+        .footer-section-block ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section-block ul li a {
+            color: #aaf0d1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section-block ul li a:hover {
+            color: white;
+        }
+        
+        .social-media-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-media-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-media-icons a:hover {
+            background: #28a745;
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom-section {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .site-header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 10px;
+            }
+            
+            .user-actions {
+                margin-top: 20px;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            .crops-listing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-input-container {
+                flex-direction: column;
+            }
+            
+            .disease-report-form-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 5px 0;
+            }
+            
+            .filter-options-container {
+                justify-content: center;
+            }
+            
+            .modal-content-wrapper {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="site-header-content">
+                <div class="site-logo">
+                    <img src="images/logo-rec.png" alt="AgriCare Logo" style="height:40px; margin-right:10px;">
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="farmer-dashboard.html">HOME</a></li>
+                        <li><a href="experts.html">EXPERTS</a></li>
+                        <li><a href="crops.html" class="active">CROPS</a></li>
+                        <li><a href="contact-form.html">CONTACT US</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Crops Database</h1>
+            <p>Explore detailed information about various crops, common diseases, and their solutions.</p>
+        </div>
+    </section>
+
+    <section class="search-container-section">
+        <div class="container">
+            <div class="search-input-container">
+                <div class="search-input-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search for crops..." id="crop-search-input">
+                </div>
+                <button class="filter-toggle-button" id="filter-toggle-button">
+                    <i class="fas fa-filter"></i> Filter
+                </button>
+            </div>
+            <div class="filter-options-container" id="filter-options-container">
+                <button class="filter-option-button active">All Crops</button>
+                <button class="filter-option-button">Grains</button>
+                <button class="filter-option-button">Vegetables</button>
+                <button class="filter-option-button">Fruits</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="crops-listing-section">
+        <div class="container">
+            <div class="crops-listing-grid" id="crops-grid-container">
+            </div>
+        </div>
+    </section>
+
+    <section class="report-disease-section">
+        <div class="container">
+            <h2 class="section-main-title">Report New Disease</h2>
+            <form class="disease-report-form-wrapper" id="disease-report-form" action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="4ffc7ed2-15ac-4b0e-ab88-938422f660fb">
+                <input type="hidden" name="subject" value="New Disease Report from AgriCare">
+                <input type="hidden" name="from_name" value="AgriCare Disease Report">
+                <input type="checkbox" name="botcheck" style="display: none;">
+                
+                <div id="success-message" class="msg success" style="display: none;">
+                    <i class="fas fa-check-circle"></i> Thank you for your report! We'll review it soon.
+                </div>
+                <div id="error-message" class="msg error" style="display: none;">
+                    <i class="fas fa-exclamation-circle"></i> There was an error submitting your report. Please try again.
+                </div>
+
+                <div class="form-field-group">
+                    <label for="select-crop-dropdown">Select Crop</label>
+                    <select id="select-crop-dropdown" name="crop" required>
+                        <option value="">Select a crop</option>
+                        <option value="wheat">Wheat</option>
+                        <option value="rice">Rice</option>
+                        <option value="corn">Corn</option>
+                        <option value="tomato">Tomato</option>
+                        <option value="potato">Potato</option>
+                    </select>
+                </div>
+                <div class="form-field-group">
+                    <label for="disease-name-input">Disease Name</label>
+                    <input type="text" id="disease-name-input" name="disease_name" placeholder="Enter disease name" required>
+                </div>
+                <div class="form-field-group full-width-field">
+                    <label for="disease-description-textarea">Disease Description</label>
+                    <textarea id="disease-description-textarea" name="disease_description" placeholder="Describe the disease symptoms and appearance" required></textarea>
+                </div>
+                <div class="form-field-group full-width-field">
+                    <label for="disease-impact-textarea">Impact on Crop</label>
+                    <textarea id="disease-impact-textarea" name="disease_impact" placeholder="Describe how the disease affects the crop" required></textarea>
+                </div>
+                <button type="submit" class="submit-button" id="submit-report-button">Submit Report</button>
+            </form>
+        </div>
+    </section>
+
+    <div class="modal-overlay" id="crop-details-modal">
+        <div class="modal-content-wrapper">
+            <div class="modal-header-section">
+                <button class="modal-close-button" id="close-modal-button">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h2 class="modal-main-title" id="modal-crop-name">Crop Name</h2>
+                <p class="modal-sub-title" id="modal-crop-scientific-name">Scientific Name</p>
+            </div>
+            <div class="modal-body-content">
+                <div class="modal-section-block">
+                    <h3 class="modal-section-heading">Overview</h3>
+                    <p id="modal-crop-description">Crop description will appear here.</p>
+                </div>
+                <div class="modal-section-block">
+                    <h3 class="modal-section-heading">Growing Conditions</h3>
+                    <div id="modal-growing-conditions">Growing conditions will appear here.</div>
+                </div>
+                <div class="modal-section-block">
+                    <h3 class="modal-section-heading">Common Diseases & Solutions</h3>
+                    <div id="modal-diseases-list">
+                    </div>
+                </div>
+                <div class="modal-section-block">
+                    <h3 class="modal-section-heading">Fertilizer & Insecticide Recommendations</h3>
+                    <div id="modal-recommendations">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content-wrapper">
+                <div class="footer-section-block">
+                    <h3>About AgriCare</h3>
+                    <p>AgriCare is a platform dedicated to connecting farmers with agricultural experts to improve crop yield, solve farming challenges, and promote sustainable agriculture.</p>
+                </div>
+                <div class="footer-section-block">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="experts.html">Experts Directory</a></li>
+                        <li><a href="crops.html">Crops</a></li>
+                        <li><a href="contact-form.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section-block">
+                    <h3>Contact Information</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Bharatpur-9, Chitwan</p>
+                    <p><i class="fas fa-phone"></i> +977 9767467837</p>
+                    <p><i class="fas fa-envelope"></i> siddharthasapkota0621@gmail.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom-section">
+                <p>&copy; 2025 AgriCare. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const crops = [
+            {
+                id: 1,
+                name: "Wheat",
+                scientificName: "Triticum aestivum",
+                category: "Grains",
+                image: "https://cdn.britannica.com/90/94190-050-C0BA6A58/Cereal-crops-wheat-reproduction.jpg",
+                description: "Wheat is a grass widely cultivated for its seed, a cereal grain that is a worldwide staple food. The many species of wheat together make up the genus Triticum; the most widely grown is common wheat.",
+                growingConditions: "Wheat grows best in temperatures between 70°F and 75°F (21°C to 24°C). It requires well-drained soil with a pH between 6.0 and 7.5. Wheat needs about 12-15 inches of water during its growing season.",
+                diseases: [
+                    {
+                        name: "Rust",
+                        description: "Rust is a fungal disease that causes orange-brown pustules on leaves and stems.",
+                        solutions: [
+                            "Plant resistant varieties",
+                            "Apply fungicides at first sign of disease",
+                            "Practice crop rotation",
+                            "Remove and destroy infected plant debris"
+                        ]
+                    },
+                    {
+                        name: "Fusarium Head Blight",
+                        description: "Also known as scab, this fungal disease causes bleaching of spikelets and shriveled kernels.",
+                        solutions: [
+                            "Use resistant varieties",
+                            "Apply fungicides during flowering",
+                            "Practice crop rotation with non-host crops",
+                            "Adjust planting density to improve air circulation"
+                        ]
+                    }
+                ],
+                recommendations: {
+                    fertilizer: "Apply 80-100 lbs of nitrogen per acre, 40-60 lbs of phosphorus, and 40-60 lbs of potassium based on soil test results.",
+                    insecticide: "Use insecticides containing cypermethrin or deltamethrin for aphid control. For armyworms, use spinosad or bacillus thuringiensis (Bt)."
+                }
+            },
+            {
+                id: 2,
+                name: "Rice",
+                scientificName: "Oryza sativa",
+                category: "Grains",
+                image: "https://sustainablerice.org/wp-content/uploads/2022/11/shutterstock_1415318663-scaled.jpeg",
+                description: "Rice is the seed of the grass species Oryza sativa (Asian rice) or Oryza glaberrima (African rice). As a cereal grain, it is the most widely consumed staple food for a large part of the world's human population.",
+                growingConditions: "Rice requires hot and humid conditions with temperatures between 70°F and 100°F (21°C to 38°C). It grows best in clayey loam soil with good water retention capacity and a pH between 5.0 and 6.5.",
+                diseases: [
+                    {
+                        name: "Bacterial Leaf Blight",
+                        description: "Causes wilting and yellowing of leaves, leading to significant yield loss.",
+                        solutions: [
+                            "Use resistant varieties",
+                            "Avoid excessive nitrogen fertilization",
+                            "Practice proper water management",
+                            "Apply copper-based bactericides"
+                        ]
+                    },
+                    {
+                        name: "Rice Blast",
+                        description: "Fungal disease that causes lesions on leaves, nodes, and panicles.",
+                        solutions: [
+                            "Plant resistant varieties",
+                            "Apply silicon fertilizers",
+                            "Use fungicides like tricyclazole or azoxystrobin",
+                            "Avoid excessive nitrogen application"
+                        ]
+                    }
+                ],
+                recommendations: {
+                    fertilizer: "Apply 120-150 kg N/ha, 60-80 kg P₂O₅/ha, and 60-80 kg K₂O/ha. Split nitrogen application into 3-4 doses.",
+                    insecticide: "For stem borers, use cartap hydrochloride or chlorantraniliprole. For brown plant hoppers, use imidacloprid or thiamethoxam."
+                }
+            },
+            {
+                id: 3,
+                name: "Tomato",
+                scientificName: "Solanum lycopersicum",
+                category: "Vegetables",
+                image: "https://images.unsplash.com/photo-1561136594-7f68413baa99?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+                description: "The tomato is the edible berry of the plant Solanum lycopersicum, commonly known as a tomato plant. The species originated in western South America and Central America.",
+                growingConditions: "Tomatoes grow best in temperatures between 70°F and 85°F (21°C to 29°C). They require well-drained, fertile soil with a pH between 6.0 and 6.8. Tomatoes need at least 6-8 hours of direct sunlight daily.",
+                diseases: [
+                    {
+                        name: "Early Blight",
+                        description: "Causes dark spots with concentric rings on lower leaves, which may yellow and drop.",
+                        solutions: [
+                            "Use disease-free seeds and transplants",
+                            "Practice crop rotation (3-4 years)",
+                            "Apply chlorothalonil or copper-based fungicides",
+                            "Mulch plants to prevent soil splashing"
+                        ]
+                    },
+                    {
+                        name: "Blossom End Rot",
+                        description: "Causes dark, sunken areas on the bottom of fruits due to calcium deficiency.",
+                        solutions: [
+                            "Maintain consistent soil moisture",
+                            "Apply calcium nitrate foliar spray",
+                            "Avoid excessive nitrogen fertilization",
+                            "Test soil and maintain pH around 6.5"
+                        ]
+                    }
+                ],
+                recommendations: {
+                    fertilizer: "Apply 3-4 lbs of 10-10-10 fertilizer per 100 sq ft before planting. Side-dress with nitrogen fertilizer when fruits are about 1 inch in diameter.",
+                    insecticide: "For aphids and whiteflies, use insecticidal soap or neem oil. For tomato hornworms, use spinosad or bacillus thuringiensis (Bt)."
+                }
+            },
+            {
+                id: 4,
+                name: "Corn",
+                scientificName: "Zea mays",
+                category: "Grains",
+                image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80",
+                description: "Maize, also known as corn, is a cereal grain first domesticated by indigenous peoples in southern Mexico about 10,000 years ago. The leafy stalk of the plant produces pollen inflorescences and separate ovuliferous inflorescences called ears that yield kernels or seeds.",
+                growingConditions: "Corn grows best in temperatures between 77°F and 91°F (25°C to 33°C). It requires well-drained, fertile soil with a pH between 5.8 and 6.8. Corn needs consistent moisture, especially during tasseling and silking.",
+                diseases: [
+                    {
+                        name: "Northern Corn Leaf Blight",
+                        description: "Causes long, grayish-green or tan lesions on leaves that can reduce yield significantly.",
+                        solutions: [
+                            "Plant resistant hybrids",
+                            "Practice crop rotation",
+                            "Apply fungicides like propiconazole or azoxystrobin",
+                            "Plow under crop residue to reduce inoculum"
+                        ]
+                    },
+                    {
+                        name: "Common Rust",
+                        description: "Causes small, circular to elongated pustules on leaves that rupture to release reddish-brown spores.",
+                        solutions: [
+                            "Plant resistant hybrids",
+                            "Apply fungicides when disease first appears",
+                            "Avoid late planting in areas prone to rust"
+                        ]
+                    }
+                ],
+                recommendations: {
+                    fertilizer: "Apply 120-150 lbs of nitrogen per acre, 40-60 lbs of phosphorus, and 40-80 lbs of potassium based on soil test results.",
+                    insecticide: "For corn borers, use bifenthrin or cyfluthrin. For armyworms, use spinosad or chlorantraniliprole."
+                }
+            },
+            {
+                id: 5,
+                name: "Potato",
+                scientificName: "Solanum tuberosum",
+                category: "Vegetables",
+                image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+                description: "The potato is a starchy food, a tuber of the plant Solanum tuberosum and is a root vegetable native to the Americas. The plant is a perennial in the nightshade family Solanaceae.",
+                growingConditions: "Potatoes grow best in temperatures between 60°F and 70°F (15°C to 21°C). They require well-drained, loose soil with a pH between 5.0 and 6.0. Potatoes need consistent moisture, especially during tuber formation.",
+                diseases: [
+                    {
+                        name: "Late Blight",
+                        description: "Causes dark, water-soaked lesions on leaves and stems, with white fungal growth under humid conditions.",
+                        solutions: [
+                            "Plant certified disease-free seed potatoes",
+                            "Apply fungicides like chlorothalonil or mancozeb",
+                            "Destroy cull piles and volunteer plants",
+                            "Practice 3-4 year crop rotation"
+                        ]
+                    },
+                    {
+                        name: "Potato Scab",
+                        description: "Causes rough, corky lesions on tuber surfaces, reducing market quality.",
+                        solutions: [
+                            "Maintain soil pH between 5.0 and 5.2",
+                            "Keep soil consistently moist during tuber formation",
+                            "Plant resistant varieties",
+                            "Practice crop rotation with non-host crops"
+                        ]
+                    }
+                ],
+                recommendations: {
+                    fertilizer: "Apply 120-160 lbs of nitrogen per acre, 80-120 lbs of phosphorus, and 120-160 lbs of potassium based on soil test results.",
+                    insecticide: "For Colorado potato beetles, use spinosad or azadirachtin. For aphids, use imidacloprid or acetamiprid."
+                }
+            },
+            {
+                id: 6,
+                name: "Apple",
+                scientificName: "Malus domestica",
+                category: "Fruits",
+                image: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+                description: "An apple is an edible fruit produced by an apple tree (Malus domestica). Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus.",
+                growingConditions: "Apples grow best in temperate climates with cold winters and moderate summers. They require well-drained soil with a pH between 6.0 and 7.0. Apples need winter chilling (below 45°F/7°C) for 500-1000 hours depending on variety.",
+                diseases: [
+                    {
+                        name: "Apple Scab",
+                        description: "Causes olive-green to black spots on leaves and fruits, leading to defoliation and fruit cracking.",
+                        solutions: [
+                            "Plant resistant varieties",
+                            "Apply fungicides like captan or myclobutanil",
+                            "Rake and destroy fallen leaves",
+                            "Prune trees to improve air circulation"
+                        ]
+                    },
+                    {
+                        name: "Fire Blight",
+                        description: "Bacterial disease that causes wilting and blackening of blossoms, shoots, and branches.",
+                        solutions: [
+                            "Prune infected branches 12 inches below visible symptoms",
+                            "Disinfect pruning tools between cuts",
+                            "Apply copper sprays during dormancy",
+                            "Avoid excessive nitrogen fertilization"
+                        ]
+                    }
+                ],
+                recommendations: {
+                    fertilizer: "Apply 1-2 lbs of 10-10-10 fertilizer per year of tree age, up to 10 lbs for mature trees. Adjust based on soil test results.",
+                    insecticide: "For codling moths, use spinosad or esfenvalerate. For aphids, use horticultural oil or insecticidal soap."
+                }
+            }
+        ];
+
+        const cropsGridContainer = document.getElementById('crops-grid-container');
+        const cropSearchInput = document.getElementById('crop-search-input');
+        const filterToggleButton = document.getElementById('filter-toggle-button');
+        const filterOptionsContainer = document.getElementById('filter-options-container');
+        const cropDetailsModal = document.getElementById('crop-details-modal');
+        const closeModalButton = document.getElementById('close-modal-button');
+        const diseaseReportForm = document.getElementById('disease-report-form');
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCrops(crops);
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            cropSearchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const filteredCrops = crops.filter(crop => 
+                    crop.name.toLowerCase().includes(searchTerm) ||
+                    crop.scientificName.toLowerCase().includes(searchTerm) ||
+                    crop.description.toLowerCase().includes(searchTerm)
+                );
+                loadCrops(filteredCrops);
+            });
+
+            filterToggleButton.addEventListener('click', function() {
+                filterOptionsContainer.classList.toggle('active');
+            });
+
+            document.querySelectorAll('.filter-option-button').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-option-button').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    const filter = this.textContent;
+                    if (filter === 'All Crops') {
+                        loadCrops(crops);
+                    } else {
+                        const filteredCrops = crops.filter(crop => crop.category === filter);
+                        loadCrops(filteredCrops);
+                    }
+                });
+            });
+
+            closeModalButton.addEventListener('click', function() {
+                cropDetailsModal.style.display = 'none';
+            });
+
+            window.addEventListener('click', function(e) {
+                if (e.target === cropDetailsModal) {
+                    cropDetailsModal.style.display = 'none';
+                }
+            });
+
+            diseaseReportForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const successMessage = document.getElementById('success-message');
+                const errorMessage = document.getElementById('error-message');
+                const submitReportButton = document.getElementById('submit-report-button');
+                const originalBtnText = submitReportButton.innerHTML;
+                
+                successMessage.style.display = 'none';
+                errorMessage.style.display = 'none';
+                
+                submitReportButton.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
+                submitReportButton.disabled = true;
+                
+                const formData = new FormData(this);
+                
+                try {
+                    const response = await fetch(this.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (response.ok && result.success) {
+                        successMessage.style.display = 'block';
+                        this.reset();
+                    } else {
+                        errorMessage.textContent = result.message || 'There was an error sending your report. Please try again.';
+                        errorMessage.style.display = 'block';
+                    }
+                } catch (error) {
+                    errorMessage.textContent = 'There was an error sending your report. Please try again.';
+                    errorMessage.style.display = 'block';
+                } finally {
+                    submitReportButton.innerHTML = originalBtnText;
+                    submitReportButton.disabled = false;
+                }
+            });
+        }
+
+        function loadCrops(cropsArray) {
+            cropsGridContainer.innerHTML = '';
+            
+            if (cropsArray.length === 0) {
+                cropsGridContainer.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-search"></i>
+                        <h3>No crops found</h3>
+                        <p>Try adjusting your search or filter criteria</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            cropsArray.forEach(crop => {
+                const cropCardItem = document.createElement('div');
+                cropCardItem.className = 'crop-card-item';
+                cropCardItem.innerHTML = `
+                    <div class="crop-image-container">
+                        <img src="${crop.image}" alt="${crop.name}">
+                    </div>
+                    <div class="crop-info-content">
+                        <h3 class="crop-title">${crop.name}</h3>
+                        <p class="crop-scientific-name">${crop.scientificName}</p>
+                        <p class="crop-short-description">${crop.description}</p>
+                        <div class="crop-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">${crop.diseases.length}</span>
+                                <span class="stat-label">Diseases</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">${crop.category}</span>
+                                <span class="stat-label">Category</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                cropCardItem.addEventListener('click', () => {
+                    openCropModal(crop);
+                });
+                
+                cropsGridContainer.appendChild(cropCardItem);
+            });
+        }
+
+        function openCropModal(crop) {
+            document.getElementById('modal-crop-name').textContent = crop.name;
+            document.getElementById('modal-crop-scientific-name').textContent = crop.scientificName;
+            document.getElementById('modal-crop-description').textContent = crop.description;
+            
+            document.getElementById('modal-growing-conditions').textContent = crop.growingConditions;
+            
+            const diseasesListContainer = document.getElementById('modal-diseases-list');
+            diseasesListContainer.innerHTML = '';
+            
+            crop.diseases.forEach(disease => {
+                const diseaseElement = document.createElement('div');
+                diseaseElement.className = 'disease-info-item';
+                diseaseElement.innerHTML = `
+                    <h4 class="disease-title">${disease.name}</h4>
+                    <p class="disease-description-text">${disease.description}</p>
+                    <div class="solutions">
+                        ${disease.solutions.map(solution => `
+                            <p class="solution-step">${solution}</p>
+                        `).join('')}
+                    </div>
+                `;
+                diseasesListContainer.appendChild(diseaseElement);
+            });
+            
+            const recommendationsContainer = document.getElementById('modal-recommendations');
+            recommendationsContainer.innerHTML = `
+                <p><strong>Fertilizer:</strong> ${crop.recommendations.fertilizer}</p>
+                <p><strong>Insecticide:</strong> ${crop.recommendations.insecticide}</p>
+            `;
+            
+            cropDetailsModal.style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
