@@ -1,496 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - AgriCare</title>
-    <link rel="icon" type="image/png" href="images/logo-circular.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        body {
-            background: url('https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
-            background-size: cover;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .container {
-            max-width: 1100px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.85);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            overflow: hidden;
-            display: flex;
-            animation: fadeIn 0.8s ease-out;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-        .sidebar {
-            width: 40%;
-            background: linear-gradient(135deg, #145a32 0%, #28a745 100%);
-            color: white;
-            padding: 50px 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .sidebar::before {
-            content: '';
-            position: absolute;
-            top: -50px;
-            right: -50px;
-            width: 150px;
-            height: 150px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-        }
-        .sidebar::after {
-            content: '';
-            position: absolute;
-            bottom: -80px;
-            left: -80px;
-            width: 200px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-        }
-        .main-form {
-            width: 60%;
-            padding: 50px 40px;
-            background: white;
-        }
-        .brand {
-            display: flex;
-            align-items: center;
-            margin-bottom: 50px;
-            position: relative;
-            z-index: 2;
-        }
-        .brand-logo {
-            width: 100px;
-            height: 100px;
-            margin-left: 100px;
-            border-radius: 50%;
-            margin-right: 12px;
-            object-fit: cover;
-            border: 2px solid white;
-        }
-        .contact-info {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 30px;
-            position: relative;
-            z-index: 2;
-            transition: transform 0.3s ease;
-        }
-        .contact-info:hover {
-            transform: translateX(5px);
-        }
-        .contact-info i {
-            font-size: 24px;
-            margin-right: 15px;
-            margin-top: 5px;
-            color: #aaf0d1;
-            flex-shrink: 0;
-        }
-        .info-text h3 {
-            font-size: 18px;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-        .info-text p {
-            font-size: 15px;
-            opacity: 0.9;
-            line-height: 1.6;
-        }
-        .heading {
-            font-size: 32px;
-            color: #145a32;
-            margin-bottom: 35px;
-            font-weight: 700;
-            position: relative;
-        }
-        .heading:after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -12px;
-            width: 60px;
-            height: 5px;
-            background: #28a745;
-            border-radius: 3px;
-        }
-        .form-fields {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        .input-wrap {
-            margin-bottom: 25px;
-            position: relative;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: slideUp 0.6s ease forwards;
-        }
-        .full {
-            grid-column: 1 / span 2;
-        }
-        .input-wrap:nth-child(1) { animation-delay: 0.1s; }
-        .input-wrap:nth-child(2) { animation-delay: 0.2s; }
-        .input-wrap:nth-child(3) { animation-delay: 0.3s; }
-        .input-wrap:nth-child(4) { animation-delay: 0.4s; }
-        .input-wrap:nth-child(5) { animation-delay: 0.5s; }
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 500;
-            color: #333;
-            font-size: 16px;
-        }
-        input, textarea, select {
-            width: 100%;
-            padding: 16px 20px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background: #f9f9f9;
-        }
-        input:focus, textarea:focus, select:focus {
-            border-color: #28a745;
-            outline: none;
-            box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.2);
-            background: white;
-        }
-        textarea {
-            min-height: 140px;
-            resize: vertical;
-        }
-        select {
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 18px center;
-            background-size: 18px;
-        }
-        .submit-btn {
-            background: linear-gradient(135deg, #145a32 0%, #28a745 100%);
-            color: white;
-            border: none;
-            padding: 18px 45px;
-            border-radius: 50px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
-            margin-top: 10px;
-        }
-        .submit-btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 10px 25px rgba(40, 167, 69, 0.5);
-        }
-        .submit-btn:active {
-            transform: translateY(1px);
-            box-shadow: 0 3px 10px rgba(40, 167, 69, 0.4);
-        }
-        .submit-btn i {
-            margin-left: 10px;
-            transition: transform 0.3s ease;
-        }
-        .submit-btn:hover i {
-            transform: translateX(4px);
-        }
-        .note {
-            margin-top: 25px;
-            font-size: 14px;
-            color: #666;
-            text-align: center;
-        }
-        .alert {
-            padding: 16px 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-            display: none;
-            border-left: 5px solid;
-        }
-        .alert.success {
-            background: #d4edda;
-            color: #155724;
-            border-left-color: #28a745;
-            animation: fadeIn 0.5s ease;
-        }
-        .alert.error {
-            background: #f8d7da;
-            color: #721c24;
-            border-left-color: #dc3545;
-            animation: shake 0.5s ease;
-        }
-        .alert i {
-            margin-right: 10px;
-        }
-        .text-counter {
-            text-align: right;
-            font-size: 14px;
-            color: #666;
-            margin-top: 5px;
-        }
-        .text-counter.limit {
-            color: #dc3545;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px);}
-            to { opacity: 1; transform: translateY(0);}
-        }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0);}
-            20%, 60% { transform: translateX(-5px);}
-            40%, 80% { transform: translateX(5px);}
-        }
-        @media (max-width: 900px) {
-            .bigBox { flex-direction: column; }
-            .infoSide, .formSide { width: 100%; }
-            .infoSide { padding: 40px 30px; border-radius: 20px 20px 0 0; }
-            .formSide { padding: 40px 30px; border-radius: 0 0 20px 20px; }
-            .formGrid { grid-template-columns: 1fr; }
-            .fullWidth { grid-column: 1; }
-        }
-        @media (max-width: 480px) {
-            .infoSide, .formSide { padding: 30px 20px; }
-            .formTitle { font-size: 28px; }
-            input, textarea, select { padding: 14px 16px; }
-            .sendBtn { width: 100%; }
-            .logo { font-size: 28px; }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact Us - AgriCare</title>
+  <link rel="icon" type="image/png" href="images/logo-circular.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/contact-form.css">
 </head>
 <body>
-    <div class="container">
-        <div class="sidebar">
-            <div class="brand">
-                <img src="images/logo-circular.png" alt="AgriCare Logo" class="brand-logo">
-            </div>
-            <div class="contact-info">
-                <i class="fas fa-map-marker-alt"></i>
-                <div class="info-text">
-                    <h3>Our Location</h3>
-                    <p>Narayani Model Secondary School, Bharatpur-10, Chitwan</p>
-                </div>
-            </div>
-            <div class="contact-info">
-                <i class="fas fa-envelope"></i>
-                <div class="info-text">
-                    <h3>Email Us</h3>
-                    <p>siddharthasapkota0621@gmail.com<br>kaprianmol0@gmail.com</p>
-                </div>
-            </div>
-            <div class="contact-info">
-                <i class="fas fa-phone-alt"></i>
-                <div class="info-text">
-                    <h3>Call Us</h3>
-                    <p>+977 9767467837<br>+977 9745359507</p>
-                </div>
-            </div>
+  <div class="contact-wrapper">
+    <div class="contact-info">
+      <div class="contact-logo"><img src="images/logo-circular.png" alt="AgriCare Logo" class="logo-circular"></div>
+      <div class="contact-detail">
+        <i class="fas fa-map-marker-alt"></i>
+        <div class="contact-words">
+          <h3>Our Location</h3>
+          <p>Narayani Model Secondary School, Bharatpur-10, Chitwan</p>
         </div>
-        <div class="main-form">
-            <h2 class="heading">Get in Touch</h2>
-            <form id="contact" action="https://api.web3forms.com/submit" method="POST">
-                <input type="hidden" name="access_key" value="4ffc7ed2-15ac-4b0e-ab88-938422f660fb">
-                <input type="hidden" name="subject" value="New Contact Form Submission from AgriCare">
-                <input type="hidden" name="from_name" value="AgriCare Contact Form">
-                <input type="checkbox" name="botcheck" style="display: none;">
-                
-                <div class="form-fields">
-                    <div class="input-wrap">
-                        <label for="user-name">Full Name *</label>
-                        <input type="text" id="user-name" name="name" placeholder="Your full name" required>
-                    </div>
-                    <div class="input-wrap">
-                        <label for="user-email">Email Address *</label>
-                        <input type="email" id="user-email" name="email" placeholder="Your email address" required>
-                    </div>
-                    <div class="input-wrap">
-                        <label for="user-phone">Phone Number</label>
-                        <input type="tel" id="user-phone" name="phone" placeholder="Your phone number">
-                    </div>
-                    <div class="input-wrap">
-                        <label for="topic">Inquiry Type</label>
-                        <select id="topic" name="inquiry_type">
-                            <option value="">Select an option</option>
-                            <option value="general">General Information</option>
-                            <option value="support">Technical Support</option>
-                            <option value="partnership">Partnership</option>
-                            <option value="complaint">Complaint</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    <div class="input-wrap full">
-                        <label for="user-message">Your Message *</label>
-                        <textarea id="user-message" name="message" placeholder="How can we help you?" required maxlength="1000"></textarea>
-                        <div class="text-counter" id="counter">0/1000 characters</div>
-                    </div>
-                </div>
-                
-                <button type="submit" class="submit-btn">
-                    Send Message <i class="fas fa-paper-plane"></i>
-                </button>
-                
-                <div class="alert success" id="success">
-                    <i class="fas fa-check-circle"></i> Thank you for your message! We'll get back to you soon.
-                </div>
-                <div class="alert error" id="error">
-                    <i class="fas fa-exclamation-circle"></i> There was an error sending your message. Please try again.
-                </div>
-            </form>
-            <div class="note">
-                <p>We typically respond within 24 hours during business days.</p>
-            </div>
+      </div>
+      <div class="contact-detail">
+        <i class="fas fa-envelope"></i>
+        <div class="contact-words">
+          <h3>Email Us</h3>
+          <p>siddharthasapkota0621@gmail.com<br>kaprianmol0@gmail.com</p>
         </div>
+      </div>
+      <div class="contact-detail">
+        <i class="fas fa-phone-alt"></i>
+        <div class="contact-words">
+          <h3>Call Us</h3>
+          <p>+977 9767467837<br>+977 9745359507</p>
+        </div>
+      </div>
+      <div class="contact-social">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get all form elements
-            const elements = {
-                form: document.getElementById('contact'),
-                success: document.getElementById('success'),
-                error: document.getElementById('error'),
-                counter: document.getElementById('counter'),
-                message: document.getElementById('user-message'),
-                inputs: document.querySelectorAll('input, textarea, select')
-            };
-            
-            // Track message length
-            elements.message.addEventListener('input', function() {
-                const length = this.value.length;
-                elements.counter.textContent = `${length}/1000 characters`;
-                
-                // Warn user when approaching limit
-                if (length > 900) {
-                    elements.counter.classList.add('limit');
-                } else {
-                    elements.counter.classList.remove('limit');
-                }
-                
-                // Clear any existing messages
-                elements.success.style.display = 'none';
-                elements.error.style.display = 'none';
-            });
-            
-            // Reset field styles on input
-            elements.inputs.forEach(input => {
-                input.addEventListener('input', () => {
-                    elements.success.style.display = 'none';
-                    elements.error.style.display = 'none';
-                    input.style.borderColor = '#e0e0e0';
-                });
-            });
-            
-            // Form submission
-            form.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                // Basic validation
-                let isValid = true;
-                const requiredInputs = form.querySelectorAll('[required]');
-                
-                requiredInputs.forEach(input => {
-                    if (!input.value.trim()) {
-                        isValid = false;
-                        input.style.borderColor = '#dc3545';
-                    }
-                });
-                
-                // Email validation
-                const emailInput = document.getElementById('email');
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (emailInput.value && !emailRegex.test(emailInput.value)) {
-                    isValid = false;
-                    emailInput.style.borderColor = '#dc3545';
-                    errorMessage.textContent = 'Please enter a valid email address.';
-                    errorMessage.style.display = 'block';
-                    return;
-                }
-                
-                // Phone validation
-                const phoneInput = document.getElementById('phone');
-                if (phoneInput.value) {
-                    const phoneRegex = /^[+]?[\d\s\-()]{10,}$/;
-                    if (!phoneRegex.test(phoneInput.value)) {
-                        isValid = false;
-                        phoneInput.style.borderColor = '#dc3545';
-                        errorMessage.textContent = 'Please enter a valid phone number.';
-                        errorMessage.style.display = 'block';
-                        return;
-                    }
-                }
-                
-                if (!isValid) {
-                    errorMessage.textContent = 'Please fill in all required fields.';
-                    errorMessage.style.display = 'block';
-                    return;
-                }
-                
-                // Change button to loading state
-                const submitBtn = form.querySelector('button[type="submit"]');
-                const originalBtnText = submitBtn.innerHTML;
-                submitBtn.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
-                submitBtn.disabled = true;
-                
-                // Prepare form data
-                const formData = new FormData(form);
-                
-                try {
-                    // Send form data to Web3Forms
-                    const response = await fetch(form.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    });
-                    
-                    const result = await response.json();
-                    
-                    if (response.ok && result.success) {
-                        // Show success message
-                        successMessage.style.display = 'block';
-                        form.reset();
-                        charCount.textContent = '0/1000 characters';
-                        charCount.classList.remove('low');
-                    } else {
-                        // Show error message
-                        errorMessage.textContent = result.message || 'There was an error sending your message. Please try again.';
-                        errorMessage.style.display = 'block';
-                    }
-                } catch (error) {
-                    // Show error message
-                    errorMessage.textContent = 'There was an error sending your message. Please try again.';
-                    errorMessage.style.display = 'block';
-                } finally {
-                    // Reset button text
-                    submitBtn.innerHTML = originalBtnText;
-                    submitBtn.disabled = false;
-                }
-            });
+
+    <div class="contact-form">
+      <h2 class="contact-title">Get in Touch</h2>
+
+      <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="4ffc7ed2-15ac-4b0e-ab88-938422f660fb" />
+        <input type="hidden" name="subject" value="New Contact Form Submission from AgriCare" />
+        <input type="hidden" name="from_name" value="AgriCare Contact Form" />
+        <input type="checkbox" name="botcheck" style="display:none" />
+
+        <div class="contact-grid">
+          <div class="contact-group">
+            <label for="contact-name">Full Name *</label>
+            <input type="text" id="contact-name" name="name" placeholder="Your full name" required />
+          </div>
+          <div class="contact-group">
+            <label for="contact-email">Email Address *</label>
+            <input type="email" id="contact-email" name="email" placeholder="Your email address" required />
+          </div>
+          <div class="contact-group">
+            <label for="contact-phone">Phone Number</label>
+            <input type="tel" id="contact-phone" name="phone" placeholder="Your phone number" />
+          </div>
+          <div class="contact-group">
+            <label for="contact-inquiry">Inquiry Type</label>
+            <select id="contact-inquiry" name="inquiry_type">
+              <option value="">Select an option</option>
+              <option value="general">General Information</option>
+              <option value="support">Technical Support</option>
+              <option value="partnership">Partnership</option>
+              <option value="complaint">Complaint</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="contact-group contact-full">
+            <label for="contact-message">Your Message *</label>
+            <textarea id="contact-message" name="message" placeholder="How can we help you?" required maxlength="1000"></textarea>
+            <div class="character-count" id="contact-char-count">0/1000 characters</div>
+          </div>
+        </div>
+
+        <button type="submit" class="contact-send-btn">Send Message <i class="fas fa-paper-plane"></i></button>
+
+        <div class="contact-success" id="contact-success-msg"><i class="fas fa-check-circle"></i> Thank you for your message! We'll get back to you soon.</div>
+        <div class="contact-error" id="contact-error-msg"><i class="fas fa-exclamation-circle"></i> There was an error sending your message. Please try again.</div>
+      </form>
+
+      <div class="contact-footer"><p>We typically respond within 24 hours during business days.</p></div>
+    </div>
+  </div>
+
+  <div class="back-btn-container">
+    <button class="back-btn" id="back-home-btn"><i class="fas fa-home"></i> Back to Home</button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      const form = document.getElementById('contact-form');
+      const successMessage = document.getElementById('contact-success-msg');
+      const errorMessage = document.getElementById('contact-error-msg');
+      const charCount = document.getElementById('contact-char-count');
+      const messageTextarea = document.getElementById('contact-message');
+      const inputs = form.querySelectorAll('input, textarea, select');
+
+      messageTextarea.addEventListener('input', function(){
+        const length = this.value.length;
+        charCount.textContent = `${length}/1000 characters`;
+        if(length > 900) charCount.classList.add('low'); else charCount.classList.remove('low');
+        successMessage.style.display = 'none';
+        errorMessage.style.display = 'none';
+      });
+
+      inputs.forEach(input => {
+        input.addEventListener('input', () => {
+          successMessage.style.display = 'none';
+          errorMessage.style.display = 'none';
+          input.style.borderColor = '#e6e6e6';
         });
-    </script>
+      });
+
+      form.addEventListener('submit', async function(e){
+        e.preventDefault();
+        let isValid = true;
+        const requiredInputs = form.querySelectorAll('[required]');
+        requiredInputs.forEach(input => {
+          if(!input.value.trim()){
+            isValid = false;
+            input.style.borderColor = '#dc3545';
+          }
+        });
+        const emailInput = document.getElementById('contact-email');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if(emailInput.value && !emailRegex.test(emailInput.value)){
+          isValid = false;
+          emailInput.style.borderColor = '#dc3545';
+          errorMessage.textContent = 'Please enter a valid email address.';
+          errorMessage.style.display = 'block';
+          return;
+        }
+        const phoneInput = document.getElementById('contact-phone');
+        if(phoneInput.value){
+          const phoneRegex = /^[+]?[\d\s\-()]{10,}$/;
+          if(!phoneRegex.test(phoneInput.value)){
+            isValid = false;
+            phoneInput.style.borderColor = '#dc3545';
+            errorMessage.textContent = 'Please enter a valid phone number.';
+            errorMessage.style.display = 'block';
+            return;
+          }
+        }
+        if(!isValid){
+          errorMessage.textContent = 'Please fill in all required fields.';
+          errorMessage.style.display = 'block';
+          return;
+        }
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
+        submitBtn.disabled = true;
+
+        const formData = new FormData(form);
+        try{
+          const response = await fetch(form.action, {method:'POST',body:formData,headers:{'Accept':'application/json'}});
+          const result = await response.json();
+          if(response.ok && result.success){
+            successMessage.style.display = 'block';
+            form.reset();
+            charCount.textContent = '0/1000 characters';
+            charCount.classList.remove('low');
+          } else {
+            errorMessage.textContent = result.message || 'There was an error sending your message. Please try again.';
+            errorMessage.style.display = 'block';
+          }
+        } catch(err){
+          errorMessage.textContent = 'There was an error sending your message. Please try again.';
+          errorMessage.style.display = 'block';
+        } finally {
+          submitBtn.innerHTML = originalBtnText;
+          submitBtn.disabled = false;
+        }
+      });
+
+      const backHomeBtn = document.getElementById('back-home-btn');
+
+      backHomeBtn.addEventListener('click', () => {
+        window.location.href = './farmer-dashboard.html';
+      });
+    });
+  </script>
 </body>
 </html>
