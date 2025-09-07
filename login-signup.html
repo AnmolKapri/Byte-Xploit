@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AgriCare - Authentication</title>
-    <link rel="icon" type="image/png" href="images/logo-circular.png">
-
-
 
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
@@ -15,10 +12,11 @@
     <link rel="stylesheet" href="css/login-signup.css">
 
 </head>
+
 <body> 
     <div class="mainBox">
         <div class="WebName">AgriCare</div>
-        <div class="bigText">
+        <div class="TextTtl">
             <div class="bigTitle login">Login Form</div>
             <div class="bigTitle signup">Farmer Signup Form</div>
         </div>
@@ -73,7 +71,7 @@
                         <div class="btnLayer"></div>
                         <input type="submit" value="Signup">
                     </div>
-                    <div class="signupLink">Are you a professional? <a href="#" id="proLink">Apply through our Google Form</a></div>
+                    <div class="signupLink">Are you a professional? <a href="https://forms.gle/LiLNM8mJQU16LbZY7">Apply through our Google Form</a></div>
                 </form>
             </div>
         </div>
@@ -97,11 +95,10 @@
 
 
 
-        const loginText = document.querySelector(".bigText .login");
+        const loginText = document.querySelector(".TextTtl .login");
         const loginForm = document.querySelector("form.login");
         const loginBtn = document.querySelector("label.login");
         const signupBtn = document.querySelector("label.signup");
-        const proLink = document.getElementById("proLink");
         
 
 
@@ -114,12 +111,6 @@
             loginForm.style.marginLeft = "0%";
             loginText.style.marginLeft = "0%";
         });
-
-
-        proLink.onclick = function(e) {
-            e.preventDefault();
-            window.open('https://forms.gle/LiLNM8mJQU16LbZY7', '_blank');
-        };
         
         function showMsg(element, message, isError = true) {
             element.textContent = message;
