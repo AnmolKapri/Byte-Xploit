@@ -4,7 +4,6 @@
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
 body {
     background: url('https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
     background-size: cover;
@@ -24,11 +23,9 @@ body {
     box-shadow: 0 18px 36px rgba(0, 0, 0, 0.14);
     overflow: hidden;
     display: flex;
-    /* animation: fadeIn 0.7s ease-out; */
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.5);
 }
-
 .contact-info {
     width: 38%;
     background: linear-gradient(135deg, #145a32 0%, #28a745 100%);
@@ -41,34 +38,34 @@ body {
     overflow: hidden;
 }
 
-.contact-info::before {
+.contact-info::before, .contact-info::after {
     content: '';
     position: absolute;
+    border-radius: 50%;
+}
+.contact-info::before {
     top: -48px;
     right: -48px;
     width: 120px;
     height: 120px;
     background: rgba(255, 255, 255, 0.08);
-    border-radius: 50%;
 }
-
 .contact-info::after {
-    content: '';
-    position: absolute;
     bottom: -70px;
     left: -70px;
     width: 160px;
     height: 160px;
     background: rgba(255, 255, 255, 0.08);
-    border-radius: 50%;
 }
 
+/* The right side: the actual contact form */
 .contact-form {
     width: 62%;
     padding: 36px 28px;
     background: #fff;
 }
 
+/* Logo styling: make it stand out and feel important */
 .contact-logo {
     font-size: 30px;
     font-weight: 700;
@@ -77,7 +74,6 @@ body {
     align-items: center;
     z-index: 2;
 }
-
 .logo-circular {
     width: 60px;
     height: 60px;
@@ -86,13 +82,13 @@ body {
     bottom: 15px;
 }
 
+
 .contact-detail {
     display: flex;
     align-items: flex-start;
     margin-bottom: 20px;
     z-index: 2;
 }
-
 .contact-detail i {
     font-size: 22px;
     margin-right: 12px;
@@ -100,13 +96,11 @@ body {
     color: #aaf0d1;
     flex-shrink: 0;
 }
-
 .contact-words h3 {
     font-size: 17px;
     margin-bottom: 6px;
     font-weight: 600;
 }
-
 .contact-words p {
     font-size: 14px;
     opacity: 0.92;
@@ -119,7 +113,6 @@ body {
     margin-top: 12px;
     z-index: 2;
 }
-
 .contact-social a {
     display: flex;
     align-items: center;
@@ -130,11 +123,12 @@ body {
     background: rgba(255, 255, 255, 0.18);
     color: #fff;
 }
-
 .contact-social a:hover {
     background: #fff;
     color: #28a745;
 }
+
+
 
 .contact-title {
     font-size: 28px;
@@ -143,7 +137,6 @@ body {
     font-weight: 700;
     position: relative;
 }
-
 .contact-title:after {
     content: '';
     position: absolute;
@@ -155,20 +148,22 @@ body {
     border-radius: 3px;
 }
 
+
 .contact-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 14px;
 }
-
 .contact-group {
     margin-bottom: 16px;
     position: relative;
 }
-
 .contact-full {
     grid-column: 1 / span 2;
 }
+
+
+
 
 label {
     display: block;
@@ -177,6 +172,7 @@ label {
     color: #333;
     font-size: 15px;
 }
+
 
 input,
 textarea,
@@ -189,7 +185,6 @@ select {
     transition: all 0.22s ease;
     background: #fbfbfb;
 }
-
 input:focus,
 textarea:focus,
 select:focus {
@@ -198,15 +193,12 @@ select:focus {
     box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.14);
     background: #fff;
 }
-
 textarea {
     min-height: 120px;
     resize: vertical;
 }
-
 select {
     appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
     background-position: right 14px center;
     background-size: 16px;
@@ -227,10 +219,10 @@ select {
     box-shadow: 0 6px 18px rgba(40, 167, 69, 0.28);
     margin-top: 10px;
 }
-
 .contact-send-btn:hover {
     box-shadow: 0 12px 30px rgba(40, 167, 69, 0.36);
 }
+
 
 .back-btn-container {
     display: flex;
@@ -238,7 +230,6 @@ select {
     margin: 18px 0 28px;
     width: 100%;
 }
-
 .back-btn {
     background: #fff;
     color: #145a32;
@@ -252,11 +243,11 @@ select {
     align-items: center;
     gap: 10px;
 }
-
 .back-btn:hover {
     background: #145a32;
     color: #fff;
 }
+
 
 .contact-footer {
     margin-top: 18px;
@@ -274,7 +265,6 @@ select {
     display: none;
     border-left: 5px solid #28a745;
 }
-
 .contact-error {
     background: #f8d7da;
     color: #721c24;
@@ -284,24 +274,19 @@ select {
     display: none;
     border-left: 5px solid #dc3545;
 }
-
 .contact-success i,
 .contact-error i {
     margin-right: 8px;
 }
-
 .character-count {
     text-align: right;
     font-size: 13px;
     color: #666;
     margin-top: 6px;
 }
-
 .character-count.low {
     color: #dc3545;
 }
-
-
 @media (max-width: 900px) {
     .contact-wrapper {
         flex-direction: column;
@@ -325,7 +310,6 @@ select {
         grid-column: 1;
     }
 }
-
 @media (max-width: 480px) {
     .contact-info,
     .contact-form {
