@@ -75,7 +75,7 @@
                         <div class="btnLayer"></div>
                         <input type="submit" value="Signup">
                     </div>
-                    <div class="signupLink">Are you a professional? <a href="#" id="proLink">Apply through our Google Form</a></div>
+                    <div class="signupLink">Are you a professional? <a href="#" id="redlink">Apply through our Google Form</a></div>
                 </form>
             </div>
         </div>
@@ -97,20 +97,12 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-
-        // DOM elements
-
-
         const loginText = document.querySelector(".bigText .login");
         const loginForm = document.querySelector("form.login");
         const loginBtn = document.querySelector("label.login");
         const signupBtn = document.querySelector("label.signup");
-        const proLink = document.getElementById("proLink");
+        const redlink = document.getElementById("redlink");
         
-
-        // Form Changing
-
-
         signupBtn.onclick = (() => {
             loginForm.style.marginLeft = "-50%";
             loginText.style.marginLeft = "-50%";
@@ -121,11 +113,7 @@
             loginText.style.marginLeft = "0%";
         });
 
-        
-        // Professional Form Link
-
-
-        proLink.onclick = function(e) {
+        redlink.onclick = function(e) {
             e.preventDefault();
             window.open('https://forms.gle/LiLNM8mJQU16LbZY7', '_blank');
         };
@@ -138,10 +126,6 @@
                 element.style.display = "none";
             }, 5000);
         }
-
-        
-        // Farmer Signup
-
 
         document.getElementById("signupForm").addEventListener("submit", (e) => {
             e.preventDefault();
@@ -187,16 +171,16 @@
                 .then((doc) => {
                     if (doc.exists) {
                         const userData = doc.data();
-                        showMsg(loginOk, "Login successful! Redirecting...", false);
+                        showMsg(loginOk, "Login successful! Please Wait...", false);
                         setTimeout(() => {
                             if (userData.role === "farmer") {
-                                window.location.href = "./farmer/farmer-dashboard.html";
+                                window.location.href = "./farmer/farmer-dashboard-np-np.html";
                             } else if (userData.role === "professional") {
-                                window.location.href = "./professional/professional-dashboard.html";
+                                window.location.href = "./professional/professional-dashboard-np-np.html";
                             }
                         }, 2000);
                     } else {
-                        showMsg(loginError, "User data not found. Please contact support.");
+                        showMsg(loginError, "Sorry.User data not found.");
                     }
                 })
                 .catch((error) => {
@@ -210,9 +194,9 @@
                         if (doc.exists) {
                             const userData = doc.data();
                             if (userData.role === "farmer") {
-                                window.location.href = "farmer-dashboard.html";
+                                window.location.href = "farmer-dashboard-np.html";
                             } else if (userData.role === "professional") {
-                                window.location.href = "professional-dashboard.html";
+                                window.location.href = "professional-dashboard-np.html";
                             }
                         }
                     });
