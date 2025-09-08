@@ -14,10 +14,6 @@ body {
     background-size: cover;
     padding: 20px;
 }
-::selection{
-    background: #229954;
-    color: #fff;
-}
 .mainBox{
     overflow: hidden;
     max-width: 450px;
@@ -170,7 +166,7 @@ form .btn input[type="submit"]{
     width: 100%;
     z-index: 1;
     position: relative;
-    background: none;
+    background: linear-gradient(to right, #145a32, #229954, #28b463, #82e0aa);
     border: none;
     color: #fff;
     padding-left: 0;
@@ -178,6 +174,8 @@ form .btn input[type="submit"]{
     font-size: 20px;
     font-weight: 500;
     cursor: pointer;
+    box-shadow: 0 2px 8px rgba(40,167,69,0.15);
+    transition: background 0.3s, box-shadow 0.3s;
 }
 .msg {
     padding: 10px;
