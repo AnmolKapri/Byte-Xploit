@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriCare Crops Data</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/crops.css">
+  <link rel="shortcut icon" href="images/logo-circular.png" type="image/x-icon">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="headContent">
+        <div class="logo">
+          <img src="images/logo-rec.png" class="siteLogo" alt="AgriCare Logo">
+        </div>
+        <nav>
+          <ul>
+            <li><a href="farmer-dashboard.html">Home</a></li>
+            <li><a href="experts.html">Experts</a></li>
+            <li><a href="#" class="active">Crops</a></li>
+            <li><a href="contact-form.html">Contact Us</a></li>
+            <li><a href="crops-np.html">🌐नेपाली</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <section class="pageBanner">
+    <div class="container">
+      <h1>Animals Database</h1>
+      <p>Explore detailed information about various Animals, common diseases, and their solutions.</p>
+    </div>
+  </section>
+
+  <section class="searchContainer">
+    <div class="container">
+      <div class="searchContainerInput">
+        <div class="searchInputHolder">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search For Animals....." id="cropSearchInput">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cropListingArea">
+    <div class="container">
+      <div class="gridCropList" id="cropGridList">
+        <!-- Cattle and Buffaloes -->
+        <div class="cropCard" data-name="cattle and Buffaloes">
+          <img src="images/download.jpg">
+          <h3>Buffaloes</h3>
+          <p><strong>Diseases:</strong> Foot-and-Mouth Disease (FMD)</p>
+          <p><strong>Solutions:</strong>  Regular vaccination against diseases like FMD, LSD and ND is the most effective way to prevent large-scale outbreaks.
+
+          </p>
+        </div>
+
+        <!-- Goat -->
+        <div class="cropCard" data-name="Goat">
+          <img src="images\OIP.webp" alt="Goat">
+          <h3>Goat</h3>
+          <p><strong>Common Diseases:</strong> Foot-and-Mouth Disease (FMD)</p>
+          <p><strong>Solutions:</strong> Implementing good biosecurity measures, such as restricting visitor access, disinfecting equipment, and isolating new animals, can significantly reduce the risk of disease transmission.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cropsPreview">
+      <!-- Chicken -->
+      <div class="preview" data-target="Chicken">
+        <i class="fas fa-times"></i>
+        <img src="https://plantwiseplusknowledgebank.org/cms/asset/33c38ee3-a873-435b-8e84-fb8c7ed62014/rice-blast-ghana-1.jpg" alt="Rice">
+        <h3><strong>Plant:</strong>Chickens</h3>
+        <p><strong>Diseases:</strong>Bird Flu</p>
+        <p><strong>Description:</strong> This is a significant concern due to its potential to spread rapidly and its zoonotic nature. Outbreaks often lead to the culling of entire flocks to prevent further spread. Symptoms include respiratory distress, a drop in egg production, and sudden death.</p>
+        <p><strong>Solutions:</strong> Promptly identifying and reporting sick animals to veterinary authorities is essential for controlling outbreaks before they can spread.
+        </p>
+      </div>
+
+      
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footerSiteData">
+        <div class="siteDataBlock">
+          <h3>About AgriCare</h3>
+          <p>AgriCare is a platform dedicated to connecting farmers with agricultural experts to improve crop yield, solve farming challenges, and promote sustainable agriculture.</p>
+        </div>
+        <div class="siteDataBlock">
+          <h3>Social Links</h3>
+          <ul>
+            <li><a href="https://www.facebook.com" target="_blank">Facebook</a></li>
+            <li><a href="https://www.instagram.com" target="_blank">Instagram</a></li>
+            <li><a href="https://www.x.com" target="_blank">X</a></li>
+          </ul>
+        </div>
+        <div class="siteDataBlock">
+          <h3>Contact Info</h3>
+          <p><i class="fas fa-map-marker-alt"></i> Bharatpur-9, Chitwan</p>
+          <p><i class="fas fa-phone"></i> +977 9767467837</p>
+          <p><i class="fas fa-envelope"></i> siddharthasapkota0621@gmail.com</p>
+        </div>
+      </div>
+
+      <div class="footerBottom">
+        <p>&copy; 2025 AgriCare. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/crops.js"></script>
+</body>
+</html>
