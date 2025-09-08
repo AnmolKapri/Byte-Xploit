@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>एग्रीकेयर - विशेषज्ञ निर्देशिका</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <link rel="stylesheet" href="css/experts.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <img src="images/logo-rec.png" alt="AgriCare Logo" style="height:40px;margin-right:10px;">
+                एग्रीकेयर
+            </div>
+            <nav>
+                <ul>
+                   <li><a href="farmer-dashboard-np.html" class="active">होम</a></li>
+                        <li><a href="experts-np.html">विशेषज्ञहरू</a></li>
+                        <li><a href="crops-np.html">बालीहरू</a></li>
+                        <li><a href="contact-form-np.html">हाम्रो सम्पर्क</a></li>
+                     </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-title">
+        <h1>कृषि व्यवसायीहरू</h1>
+        <p>बाली व्यवस्थापन, रोग नियन्त्रण, र खेतीका उत्तम अभ्यासहरूमा सल्लाह प्राप्त गर्न प्रमाणित विज्ञहरूसँग सम्पर्क गर्नुहोस्।</p>
+    </section>
+
+    <section class="filter-section">
+        <div class="container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="विज्ञहरूको खोजी..." id="searchInput">
+            </div>
+        </div>
+    </section>
+
+    <section class="professionals-container">
+        <div class="container">
+            <div class="professionals-grid" id="professionalsGrid">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>पेशेवरहरू लोड गर्दै...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="chat-modal" id="chatModal" style="display:none;">
+        <div class="chat-container">
+            <div class="chat-header">
+                <h3 id="chatProfessionalName">च्याट</h3>
+                <button id="chatClose">&times;</button>
+            </div>
+            <div id="chatMessages" class="chat-messages"></div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Ask your doubts..." />
+                <button id="chatSend">पठाउनुहोस्</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h3>AgriCare को बारेमा</h3>
+                <p>एग्रीकेयरले बाली उत्पादन सुधार र दिगो कृषि प्रवर्द्धन गर्न किसानहरूलाई कृषि विज्ञ विकास जोड्ने ।</p>
+            </div>
+            <div class="footer-section">
+                <h3>द्रुत लिङ्कहरू</h3>
+                <ul>
+                   <li><a href="farmer-dashboard-np.html" class="active">होम</a></li>
+                        <li><a href="experts-np.html">विशेषज्ञहरू</a></li>
+                        <li><a href="crops-np.html">बालीहरू</a></li>
+                        <li><a href="contact-form-np.html">हाम्रो सम्पर्क</a></li>
+                    </ul>
+            </div>
+            <div class="footer-section">
+                <h3>सम्पर्क जानकारी</h3>
+                <p><i class="fas fa-map-marker-alt"></i>भरतपुर-९, चितवन</p>
+                <p><i class="fas fa-phone"></i> +९७७ ९७६७४६७८३७</p>
+                <p><i class="fas fa-envelope"></i> siddharthasapkota0621@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 AgriCare. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/experts.js"></script>
+</body>
+</html>
