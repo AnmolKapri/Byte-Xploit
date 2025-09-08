@@ -1,19 +1,17 @@
-// Firebase config
 const firebaseConfig = {
     apiKey: "AIzaSyD_NltDzkNGMH8cIrB3vChPXKR5Np8UUKI",
-  authDomain: "agricare-babrathon.firebaseapp.com",
-  projectId: "agricare-babrathon",
-  storageBucket: "agricare-babrathon.firebasestorage.app",
-  messagingSenderId: "795598532498",
-  appId: "1:795598532498:web:c42a9d93089eb53a129b4b",
-  measurementId: "G-BCB4YBRLT0"
+    authDomain: "agricare-babrathon.firebaseapp.com",
+    projectId: "agricare-babrathon",
+    storageBucket: "agricare-babrathon.firebasestorage.app",
+    messagingSenderId: "795598532498",
+    appId: "1:795598532498:web:c42a9d93089eb53a129b4b",
+    measurementId: "G-BCB4YBRLT0"
 };
 firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore();
 const auth = firebase.auth();
 
-// DOM Elements
 const professionalsGrid = document.getElementById('professionalsGrid');
 const searchInput = document.getElementById('searchInput');
 const chatModal = document.getElementById('chatModal');
@@ -27,7 +25,6 @@ let professionals = [];
 let currentProfessional = null;
 let geminiConversation = [];
 
-// Load Professionals
 async function loadProfessionals() {
     professionalsGrid.innerHTML = `<div class="loading"><i class="fas fa-spinner fa-spin"></i><p>Loading professionals...</p></div>`;
     const snapshot = await db.collection('users').where('role', '==', 'professional').get();
@@ -35,7 +32,6 @@ async function loadProfessionals() {
     renderProfessionals(professionals);
 }
 
-// Render Professionals
 function renderProfessionals(pros) {
     professionalsGrid.innerHTML = '';
     pros.forEach(pro => {
@@ -53,13 +49,11 @@ function renderProfessionals(pros) {
         professionalsGrid.appendChild(card);
     });
 
-    // Chat button click
     document.querySelectorAll('.chat-btn').forEach(btn => {
         btn.addEventListener('click', () => openChat(btn.dataset));
     });
 }
 
-// Open Chat
 function openChat(proData) {
     currentProfessional = proData;
     chatProfessionalName.textContent = proData.name;
@@ -68,10 +62,8 @@ function openChat(proData) {
     chatModal.style.display = 'flex';
 }
 
-// Close Chat
 chatClose.addEventListener('click', () => chatModal.style.display = 'none');
 
-// Append message
 function appendMessage(role, text) {
     const div = document.createElement('div');
     div.className = 'msg ' + (role === 'user' ? 'user' : 'bot');
@@ -80,7 +72,6 @@ function appendMessage(role, text) {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-// Send message with Gemini API
 async function sendMessage() {
     const text = chatInput.value.trim();
     if (!text) return;
@@ -90,7 +81,7 @@ async function sendMessage() {
 
     try {
         const { GoogleGenerativeAI } = await import('https://esm.run/@google/generative-ai');
-        const apiKey = 'AIzaSyDSxcENW9AF9Eo6W8dKCgI3x4QhmrgM0ik';
+        const apiKey = 'AIzaSyB3k6r8spPmX8baUJW5Vo6V6QchOe_Eow4';
         const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
@@ -107,7 +98,6 @@ async function sendMessage() {
 chatSend.addEventListener('click', sendMessage);
 chatInput.addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(); });
 
-// Search Filter
 searchInput.addEventListener('input', () => {
     const searchTerm = searchInput.value.toLowerCase();
     const filtered = professionals.filter(p =>
@@ -117,7 +107,6 @@ searchInput.addEventListener('input', () => {
     renderProfessionals(filtered);
 });
 
-// Initialize App
 auth.onAuthStateChanged(user => {
     if (user) loadProfessionals();
     else window.location.href = 'login.html';
