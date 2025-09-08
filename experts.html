@@ -5,48 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AgriCare - Experts Directory</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
-    
     <link rel="stylesheet" href="css/experts.css">
 </head>
 <body>
     <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <img src="images/logo-rec.png" alt="AgriCare Logo" style="height:40px; margin-right:10px;">
-                </div>
-                <nav>
-                    <ul>
-                        <li><a href="farmer-dashboard.html" class="active">HOME</a></li>
-                        <li><a href="experts.html">EXPERTS</a></li>
-                        <li><a href="crops.html">CROPS</a></li>
-                        <li><a href="contact-form.html">CONTACT US</a></li>
-                    </ul>
-                </nav>
+        <div class="container header-content">
+            <div class="logo">
+                <img src="images/logo-rec.png" alt="AgriCare Logo" style="height:40px;margin-right:10px;">
+                AgriCare
             </div>
+            <nav>
+                <ul>
+                    <li><a href="farmer-dashboard.html" class="active">HOME</a></li>
+                    <li><a href="experts.html">EXPERTS</a></li>
+                    <li><a href="crops.html">CROPS</a></li>
+                    <li><a href="contact-form.html">CONTACT US</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
     <section class="page-title">
-        <div class="container">
-            <h1>Agricultural Professionals</h1>
-            <p>Connect with certified experts to get advice on crop management, disease control, and farming best practices.</p>
-        </div>
+        <h1>Agricultural Professionals</h1>
+        <p>Connect with certified experts to get advice on crop management, disease control, and farming best practices.</p>
     </section>
 
     <section class="filter-section">
         <div class="container">
-            <h3 class="filter-title">Filter by Specialty</h3>
-            <div class="filter-options">
-                <button class="filter-btn active">All Experts</button>
-                <button class="filter-btn">Horticulture</button>
-                <button class="filter-btn">Soil Expert</button>
-            </div>
             <div class="search-box">
                 <i class="fas fa-search"></i>
                 <input type="text" placeholder="Search for experts..." id="searchInput">
@@ -65,510 +53,47 @@
         </div>
     </section>
 
-    <div class="chat-modal" id="chatModal">
+    <div class="chat-modal" id="chatModal" style="display:none;">
         <div class="chat-container">
             <div class="chat-header">
-                <div class="chat-professional">
-                    <img src="https://cdn-icons-png.flaticon.com/512/7077/7077313.png" alt="Professional" id="chatProfessionalImg">
-                    <div>
-                        <h3 id="chatProfessionalName">Professional Name</h3>
-                        <p id="chatProfessionalSpecialization">Specialization</p>
-                    </div>
-                </div>
-                <button class="chat-close" id="chatClose">
-                    <i class="fas fa-times"></i>
-                </button>
+                <h3 id="chatProfessionalName">Chat</h3>
+                <button id="chatClose">&times;</button>
             </div>
-            <div class="chat-messages" id="chatMessages">
-                <div class="loading">
-                    <i class="fas fa-spinner fa-spin"></i>
-                    <p>Loading messages...</p>
-                </div>
-            </div>
-            <div class="chat-input-container">
-                <form class="chat-input-form" id="messageForm">
-                    <input type="file" class="file-input" id="fileInput" accept="image/*">
-                    <button type="button" class="file-btn" id="fileBtn">
-                        <i class="fas fa-image"></i>
-                    </button>
-                    <input type="text" class="message-input" id="messageInput" placeholder="Type your message..." autocomplete="off">
-                    <button type="submit" class="send-btn" id="sendButton">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </form>
+            <div id="chatMessages" class="chat-messages"></div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Ask your doubts..." />
+                <button id="chatSend">Send</button>
             </div>
         </div>
     </div>
 
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>About AgriCare</h3>
-                    <p>AgriCare is a platform dedicated to connecting farmers with agricultural experts to improve crop yield, solve farming challenges, and promote sustainable agriculture.</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Experts</a></li>
-                        <li><a href="#">Crops</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Contact Information</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Bharatpur-9, Chitwan</p>
-                    <p><i class="fas fa-phone"></i> +977 9767467837</p>
-                    <p><i class="fas fa-envelope"></i> siddharthasapkota0621@gmail.com</p>
-                </div>
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h3>About AgriCare</h3>
+                <p>AgriCare connects farmers with agricultural experts to improve crop yield and promote sustainable agriculture.</p>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 AgriCare. All rights reserved.</p>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Experts</a></li>
+                    <li><a href="#">Crops</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Information</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Bharatpur-9, Chitwan</p>
+                <p><i class="fas fa-phone"></i> +977 9767467837</p>
+                <p><i class="fas fa-envelope"></i> siddharthasapkota0621@gmail.com</p>
             </div>
         </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 AgriCare. All rights reserved.</p>
+        </div>
     </footer>
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyD_NltDzkNGMH8cIrB3vChPXKR5Np8UUKI",
-    authDomain: "agricare-babrathon.firebaseapp.com",
-    projectId: "agricare-babrathon",
-    storageBucket: "agricare-babrathon.appspot.com",
-    messagingSenderId: "795598532498",
-    appId: "1:795598532498:web:c42a9d93089eb53a129b4b",
-    measurementId: "G-BCB4YBRLT0"
-        };
 
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-        const storage = firebase.storage();
-
-        const professionalsGrid = document.getElementById('professionalsGrid');
-        const searchInput = document.getElementById('searchInput');
-        const chatModal = document.getElementById('chatModal');
-        const chatClose = document.getElementById('chatClose');
-        const chatMessages = document.getElementById('chatMessages');
-        const chatProfessionalImg = document.getElementById('chatProfessionalImg');
-        const chatProfessionalName = document.getElementById('chatProfessionalName');
-        const chatProfessionalSpecialization = document.getElementById('chatProfessionalSpecialization');
-        const messageForm = document.getElementById('messageForm');
-        const messageInput = document.getElementById('messageInput');
-        const sendButton = document.getElementById('sendButton');
-        const fileInput = document.getElementById('fileInput');
-        const fileBtn = document.getElementById('fileBtn');
-
-        let currentUser = null;
-        let professionals = [];
-        let currentChatId = null;
-        let currentProfessional = null;
-        let chatListener = null;
-
-        function initApp() {
-            auth.onAuthStateChanged(async (user) => {
-                if (user) {
-                    currentUser = user;
-                    try {
-                        const userDoc = await db.collection('users').doc(user.uid).get();
-                        if (userDoc.exists) {
-                            const userData = userDoc.data();
-                            currentUser = { ...user, ...userData };
-                            loadProfessionals();
-
-                            searchInput.addEventListener('input', filterProfessionals);
-                        } else {
-                            showError('User data not found. Please contact support.');
-                        }
-                    } catch (error) {
-                        console.error('Error getting user data:', error);
-                        showError('Error loading user data. Please try again.');
-                    }
-                } else {
-                    window.location.href = 'login.html';
-                }
-            });
-        }
-
-        async function loadProfessionals() {
-            try {
-                professionalsGrid.innerHTML = `
-                    <div class="loading">
-                        <i class="fas fa-spinner fa-spin"></i>
-                        <p>Loading professionals...</p>
-                    </div>
-                `;
-
-                const querySnapshot = await db.collection('users')
-                    .where('role', '==', 'professional')
-                    .get();
-
-                professionals = [];
-                querySnapshot.forEach((doc) => {
-                    professionals.push({ id: doc.id, ...doc.data() });
-                });
-
-                renderProfessionals(professionals);
-                
-                checkUserRole();
-            } catch (error) {
-                console.error('Error loading professionals:', error);
-                showError('Error loading professionals. Please try again.');
-                professionalsGrid.innerHTML = `
-                    <div class="loading">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <p>Error loading professionals. Please try again.</p>
-                    </div>
-                `;
-            }
-        }
-
-        function renderProfessionals(pros) {
-            if (pros.length === 0) {
-                professionalsGrid.innerHTML = `
-                    <div class="loading">
-                        <i class="fas fa-user-times"></i>
-                        <p>No professionals found.</p>
-                    </div>
-                `;
-                return;
-            }
-
-            professionalsGrid.innerHTML = '';
-            
-            pros.forEach(professional => {
-                const card = document.createElement('div');
-                card.className = 'professional-card';
-                card.innerHTML = `
-                    <div class="professional-header">
-                        <div class="professional-img">
-                            <img src="https://cdn-icons-png.flaticon.com/512/7077/7077313.png" alt="${professional.fullName}">
-                        </div>
-                        <h3 class="professional-name">${professional.fullName}</h3>
-                        <p class="professional-title">${professional.specialization || 'Agricultural Expert'}</p>
-                    </div>
-                    <div class="professional-body">
-                        <div class="professional-specialty">
-                            <span class="specialty-badge">${professional.specialization || 'General Agriculture'}</span>
-                        </div>
-                        <div class="professional-info">
-                            <div class="info-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>${professional.location || 'Location not specified'}</span>
-                            </div>
-                            <div class="info-item">
-                                <i class="fas fa-envelope"></i>
-                                <span>${professional.email}</span>
-                            </div>
-                            <div class="info-item">
-                                <i class="fas fa-certificate"></i>
-                                <span>Joined: ${professional.createdAt ? formatDate(professional.createdAt.toDate()) : 'N/A'}</span>
-                            </div>
-                        </div>
-                        <div class="professional-actions">
-                            <button class="chat-btn" data-id="${professional.id}" data-email="${professional.email}" data-name="${professional.fullName}" data-specialization="${professional.specialization || 'Agricultural Expert'}">
-                                <i class="fas fa-comment"></i> Start Chat
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                professionalsGrid.appendChild(card);
-            });
-            
-            document.querySelectorAll('.chat-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const professionalId = this.getAttribute('data-id');
-                    const professionalEmail = this.getAttribute('data-email');
-                    const professionalName = this.getAttribute('data-name');
-                    const professionalSpecialization = this.getAttribute('data-specialization');
-                    
-                    openChat(professionalId, professionalEmail, professionalName, professionalSpecialization);
-                });
-            });
-        }
-
-        function formatDate(date) {
-            return new Intl.DateTimeFormat('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-            }).format(date);
-        }
-
-        function filterProfessionals() {
-            const searchTerm = searchInput.value.toLowerCase();
-            
-            if (!searchTerm) {
-                renderProfessionals(professionals);
-                return;
-            }
-            
-            const filteredPros = professionals.filter(pro => 
-                pro.fullName.toLowerCase().includes(searchTerm) ||
-                (pro.specialization && pro.specialization.toLowerCase().includes(searchTerm)) ||
-                (pro.location && pro.location.toLowerCase().includes(searchTerm))
-            );
-            
-            renderProfessionals(filteredPros);
-        }
-
-        function checkUserRole() {
-            if (currentUser.role !== 'farmer') {
-                // If user is not a farmer, hide chat buttons
-                document.querySelectorAll('.chat-btn').forEach(button => {
-                    button.style.display = 'none';
-                });
-                
-                // Show message for professionals
-                const message = document.createElement('div');
-                message.style.textAlign = 'center';
-                message.style.padding = '20px';
-                message.style.color = '#666';
-                message.textContent = 'As a professional, you can view other experts but cannot initiate chats.';
-                message.style.gridColumn = '1 / -1';
-                
-                professionalsGrid.prepend(message);
-            }
-        }
-
-        async function openChat(professionalId, professionalEmail, professionalName, professionalSpecialization) {
-            try {
-                currentProfessional = {
-                    id: professionalId,
-                    email: professionalEmail,
-                    fullName: professionalName,
-                    specialization: professionalSpecialization
-                };
-                
-                chatProfessionalImg.src = "https://cdn-icons-png.flaticon.com/512/7077/7077313.png";
-                chatProfessionalName.textContent = professionalName;
-                chatProfessionalSpecialization.textContent = professionalSpecialization;
-                
-                const ids = [currentUser.uid, professionalId].sort();
-                currentChatId = `${ids[0]}_${ids[1]}`;
-                chatModal.style.display = 'flex';
-                loadChatMessages();
-                
-            } catch (error) {
-                console.error('Error opening chat:', error);
-                alert('Error opening chat. Please try again.');
-            }
-        }
-
-        function loadChatMessages() {
-            if (chatListener) {
-                chatListener();
-            }
-            
-            chatMessages.innerHTML = `
-                <div class="loading">
-                    <i class="fas fa-spinner fa-spin"></i>
-                    <p>Loading messages...</p>
-                </div>
-            `;
-            
-            chatListener = db.collection('chats')
-                .doc(currentChatId)
-                .collection('messages')
-                .orderBy('timestamp', 'asc')
-                .onSnapshot((snapshot) => {
-                    chatMessages.innerHTML = '';
-                    
-                    if (snapshot.empty) {
-                        chatMessages.innerHTML = `
-                            <div class="no-messages">
-                                <i class="fas fa-comments"></i>
-                                <p>No messages yet. Start the conversation!</p>
-                            </div>
-                        `;
-                        return;
-                    }
-                    
-                    snapshot.forEach((doc) => {
-                        const message = doc.data();
-                        addMessageToChat(message);
-                    });
-                    
-                    scrollToBottom();
-                }, (error) => {
-                    console.error('Error listening to chat messages:', error);
-                    chatMessages.innerHTML = `
-                        <div class="loading">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <p>Error loading messages. Please try again.</p>
-                        </div>
-                    `;
-                });
-        }
-
-        function addMessageToChat(message) {
-            const messageElement = document.createElement('div');
-            messageElement.className = `message ${message.senderId === currentUser.uid ? 'sent' : 'received'}`;
-            
-            const timestamp = message.timestamp ? message.timestamp.toDate() : new Date();
-            const time = timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            
-            let messageContent = '';
-            
-            if (message.type === 'image') {
-                messageContent = `
-                    <div class="message-content">
-                        <img src="${message.imageUrl}" alt="Sent image" class="message-img">
-                        <div class="message-time">${time}</div>
-                    </div>
-                `;
-            } else {
-                messageContent = `
-                    <div class="message-content">
-                        <div class="message-text">${message.text}</div>
-                        <div class="message-time">${time}</div>
-                    </div>
-                `;
-            }
-            
-            messageElement.innerHTML = messageContent;
-            chatMessages.appendChild(messageElement);
-        }
-
-        function scrollToBottom() {
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        async function sendMessage(e) {
-            e.preventDefault();
-            
-            const messageText = messageInput.value.trim();
-            const file = fileInput.files[0];
-            
-            if (!messageText && !file) return;
-            
-            try {
-                sendButton.disabled = true;
-                
-                if (file) {
-                    const storageRef = storage.ref();
-                    const fileRef = storageRef.child(`chat_images/${currentChatId}/${Date.now()}_${file.name}`);
-                    const snapshot = await fileRef.put(file);
-                    const imageUrl = await snapshot.ref.getDownloadURL();
-                    
-                    const messageData = {
-                        type: 'image',
-                        imageUrl: imageUrl,
-                        senderId: currentUser.uid,
-                        senderName: currentUser.fullName || currentUser.email,
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                    };
-                    
-                    await db.collection('chats')
-                        .doc(currentChatId)
-                        .collection('messages')
-                        .add(messageData);
-                    
-                    fileInput.value = '';
-                }
-                
-                if (messageText) {
-                    const messageData = {
-                        type: 'text',
-                        text: messageText,
-                        senderId: currentUser.uid,
-                        senderName: currentUser.fullName || currentUser.email,
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                    };
-                    
-                    await db.collection('chats')
-                        .doc(currentChatId)
-                        .collection('messages')
-                        .add(messageData);
-                    messageInput.value = '';
-                }
-                
-                await db.collection('chats')
-                    .doc(currentChatId)
-                    .set({
-                        farmerId: currentUser.uid,
-                        farmerEmail: currentUser.email,
-                        farmerName: currentUser.fullName,
-                        professionalId: currentProfessional.id,
-                        professionalEmail: currentProfessional.email,
-                        professionalName: currentProfessional.fullName,
-                        lastMessage: messageText || 'Image',
-                        lastMessageTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                    }, { merge: true });
-                
-            } catch (error) {
-                console.error('Error sending message:', error);
-                alert('Error sending message. Please try again.');
-            } finally {
-                sendButton.disabled = false;
-            }
-        }
-
-        function showError(message) {
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'error-message';
-            errorDiv.innerHTML = `
-                <i class="fas fa-exclamation-circle"></i> ${message}
-            `;
-            document.querySelector('.professionals-container').prepend(errorDiv);
-            
-            setTimeout(() => {
-                errorDiv.remove();
-            }, 5000);
-        }
-
-        chatClose.addEventListener('click', function() {
-            chatModal.style.display = 'none';
-            
-            if (chatListener) {
-                chatListener();
-                chatListener = null;
-            }
-        });
-
-        messageForm.addEventListener('submit', sendMessage);
-
-        fileBtn.addEventListener('click', function() {
-            fileInput.click();
-        });
-
-        fileInput.addEventListener('change', function() {
-            if (this.files && this.files[0]) {
-                messageForm.dispatchEvent(new Event('submit'));
-            }
-        });
-
-        window.addEventListener('click', function(e) {
-            if (e.target === chatModal) {
-                chatModal.style.display = 'none';
-                
-                if (chatListener) {
-                    chatListener();
-                    chatListener = null;
-                }
-            }
-        });
-
-        document.querySelectorAll('.filter-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                document.querySelectorAll('.filter-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                this.classList.add('active');
-                
-                const filter = this.textContent;
-                if (filter === 'All Experts') {
-                    renderProfessionals(professionals);
-                } else {
-                    const filteredPros = professionals.filter(pro => 
-                        pro.specialization === filter
-                    );
-                    renderProfessionals(filteredPros);
-                }
-            });
-        });
-        initApp();
-    </script>
+    <script src="js/experts.js"></script>
 </body>
 </html>
